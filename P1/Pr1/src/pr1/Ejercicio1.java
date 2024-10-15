@@ -15,12 +15,11 @@ public class Ejercicio1 extends Agent{
     protected void setup()
     {
         System.out.println("Soy el agente del Ejercicio 1");
-        doDelete();
     }
     
     @Override
     protected void takeDown()
     {
-        System.out.println( " Terminating agent...");
+        System.out.println( "Terminating agent...");
     }
 }

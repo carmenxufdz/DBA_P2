@@ -17,7 +17,6 @@ public class Ejercicio2 extends Agent{
         public void action(){
             System.out.println("Soy el agente del Ejercicio 2");
             System.out.println("Este comportamiento solo se realizará una vez");
-            doDelete();
         }
         
     }
