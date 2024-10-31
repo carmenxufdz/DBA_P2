@@ -33,7 +33,7 @@ public class P2 {
         p.setParameter(Profile.MAIN_HOST, "localhost");
         p.setParameter(Profile.CONTAINER_NAME, "lorena");
         
-        String agentName = "Reactivo";
+        String agentName = "Agente";
         String className = "p2.Agente";
         /*
         switch (opcion) {

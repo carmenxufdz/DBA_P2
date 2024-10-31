@@ -66,10 +66,13 @@ public class Entorno {
                 }
                 break;
             case NORESTE:
-                y = posAgente[1]-1;
-                x = posAgente[0]+1;
-                if (y > -1 && x < mapa.getColumnas()) {
-                    estado = mapa.getPos(x, y);
+                // Si no se puede norte ni este, no se puede noreste
+                if (getEstado(Movimiento.NORTE)>=0 || getEstado(Movimiento.ESTE)>=0) {
+                    y = posAgente[1]-1;
+                    x = posAgente[0]+1;
+                    if (y > -1 && x < mapa.getColumnas()) {
+                        estado = mapa.getPos(x, y);
+                    }
                 }
                 break;
             case ESTE:
@@ -80,10 +83,13 @@ public class Entorno {
                 }
                 break;
             case SURESTE:
-                x = posAgente[0]+1;
-                y = posAgente[1]+1;
-                if (x < mapa.getColumnas() && y < mapa.getFilas()) {
-                    estado = mapa.getPos(x, y);
+                // Si no se puede sur ni este, no se puede sureste
+                if (getEstado(Movimiento.SUR)>=0 || getEstado(Movimiento.ESTE)>=0) {
+                    x = posAgente[0]+1;
+                    y = posAgente[1]+1;
+                    if (x < mapa.getColumnas() && y < mapa.getFilas()) {
+                        estado = mapa.getPos(x, y);
+                    }
                 }
                 break;
             case SUR:
@@ -94,10 +100,13 @@ public class Entorno {
                 }
                 break;
             case SUROESTE:
-                y = posAgente[1]+1;
-                x = posAgente[0]-1;
-                if (y < mapa.getFilas() && x > -1) {
-                    estado = mapa.getPos(x, y);
+                // Si no se puede sur ni oeste, no se puede suroeste
+                if (getEstado(Movimiento.SUR)>=0 || getEstado(Movimiento.OESTE)>=0) {
+                    y = posAgente[1]+1;
+                    x = posAgente[0]-1;
+                    if (y < mapa.getFilas() && x > -1) {
+                        estado = mapa.getPos(x, y);
+                    }
                 }
                 break;
             case OESTE:
@@ -108,10 +117,13 @@ public class Entorno {
                 }
                 break;
             case NOROESTE:
-                x = posAgente[0]-1;
-                y = posAgente[1]-1;
-                if (x > -1 && y > -1) {
-                    estado = mapa.getPos(x, y);
+                // Si no se puede norte ni oeste, no se puede noroeste
+                if (getEstado(Movimiento.NORTE)>=0 || getEstado(Movimiento.OESTE)>=0) {
+                    x = posAgente[0]-1;
+                    y = posAgente[1]-1;
+                    if (x > -1 && y > -1) {
+                        estado = mapa.getPos(x, y);
+                    }
                 }
                 break;
         }

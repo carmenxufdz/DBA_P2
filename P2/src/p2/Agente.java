@@ -12,25 +12,27 @@ import javafx.util.Pair;
 public class Agente extends Agent {
     private Entorno entorno;
     private int energia;
-    private ArrayList<Pair<Movimiento, Double>> movimientos;
-    
-    private boolean viendo, moviendo;
+    private ArrayList<Movimiento> movimientos;
     
     @Override
     protected void setup() {
         energia = 0;
         movimientos = new ArrayList<>();
-        
-        viendo = true;
-        moviendo = false;
+        movimientos.add(Movimiento.NORTE);
+        movimientos.add(Movimiento.NORESTE);
+        movimientos.add(Movimiento.ESTE);
+        movimientos.add(Movimiento.SURESTE);
+        movimientos.add(Movimiento.SUR);
+        movimientos.add(Movimiento.SUROESTE);
+        movimientos.add(Movimiento.OESTE);
+        movimientos.add(Movimiento.NOROESTE);
         
         Mapa mapa = new Mapa ("./maps/mapWithoutObstacle.txt");
         entorno = new Entorno (mapa, 0, 0, 5, 5);
         
         entorno.mostrarEntorno();
         
-        addBehaviour(new ComportamientoVer(entorno, this));
-        addBehaviour(new ComportamientoMover(entorno, this));
+        addBehaviour(new Comportamiento(entorno, this));
     }
     
     @Override
@@ -38,31 +40,11 @@ public class Agente extends Agent {
         System.out.println("Terminating agent...");
     }
     
-    public void setMovs (ArrayList<Pair<Movimiento, Double>> movs) {
-        movimientos = movs;
-    }
-    
-    public ArrayList<Pair<Movimiento, Double>> getMovs() {
+    public ArrayList<Movimiento> getMovs() {
         return movimientos;
     }
     
     public void mover() {
         energia++;
-    }
-    
-    public void setVer (boolean ver) {
-        viendo = ver;
-    }
-    
-    public void setMover (boolean mover) {
-        moviendo = mover;
-    }
-    
-    public boolean getVer() {
-        return viendo;
-    }
-    
-    public boolean getMover() {
-        return moviendo;
     }
 }
