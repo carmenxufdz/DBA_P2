@@ -27,8 +27,8 @@ public class Agente extends Agent {
         movimientos.add(Movimiento.OESTE);
         movimientos.add(Movimiento.NOROESTE);
         
-        Mapa mapa = new Mapa ("./maps/mapWithoutObstacle.txt");
-        entorno = new Entorno (mapa, 0, 0, 5, 5);
+        Mapa mapa = new Mapa ("./maps/mapWithComplexObstacle3.txt");
+        entorno = new Entorno (mapa, 0, 0, 9, 9);
         
         entorno.mostrarEntorno();
         

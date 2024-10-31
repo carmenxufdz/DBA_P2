@@ -37,19 +37,21 @@ public class Entorno {
     }
     
     public void mostrarEntorno() {
-        for (int x=0; x<mapa.getColumnas() ; x++) {
-            for (int y=0; y<mapa.getFilas(); y++) {
+        for (int y=0; y<mapa.getFilas() ; y++) {
+            for (int x=0; x<mapa.getColumnas(); x++) {
                 if (x==posAgente[0] && y==posAgente[1])
-                    System.out.print("A"); // A de agente
+                    System.out.print("A"); // agente
                 else if (x==posObjetivo[0] && y==posObjetivo[1])
-                    System.out.print("M"); // M de meta
+                    System.out.print("X"); // objetivo
                 else if (mapa.getPos(x, y)==-1)
-                    System.out.print("O"); // O de obstáculo
+                    System.out.print("M"); // muro
                 else System.out.print(getVeces(x, y));
+                
                 System.out.print("\t");
             }
             System.out.print("\n");
         }
+        System.out.print("\n");
     }
     
     public boolean agenteEnMeta() {
@@ -133,8 +135,12 @@ public class Entorno {
                 break;
         }
         // Celda libre
-        if (estado == 0)
-            estado = calcularDistancia(x, y);
+        if (estado == 0) {
+            // Se le añade el coste de la distancia
+            estado += calcularDistancia(x, y);
+            // Se le añade una penalización simple de ya haber pasado
+            estado += getVeces(x, y)*sqrt(mapa.getFilas()*mapa.getColumnas());
+        }
         return estado;
     }
     

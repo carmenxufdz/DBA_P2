@@ -33,7 +33,7 @@ public class Mapa {
                 for (int fila=0 ; fila<N ; fila++) {
                     linea = lector.readLine();
                     enteros = linea.split("\t");
-                    for (int columna=0 ; columna>M ; columna++)
+                    for (int columna=0 ; columna<M ; columna++)
                         matriz[fila][columna] = Integer.parseInt(enteros[columna]);
                 }
             }
@@ -64,5 +64,13 @@ public class Mapa {
     
     public int getPos (int x, int y) {
         return matriz[y][x];
+    }
+    
+    public void mostrarMapa() {
+        for (int fila=0; fila<N; fila++) {
+            for (int columna=0; columna<M; columna++)
+                System.out.print(matriz[fila][columna]+"\t");
+            System.out.print("\n");
+        }
     }
 }
