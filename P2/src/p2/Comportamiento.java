@@ -18,23 +18,17 @@ public class Comportamiento extends Behaviour {
     @Override
     public void action() {
         ArrayList<Movimiento> movimientos = agente.getMovs();
-        
-        Pair<Movimiento,Double> optimo = valorarMovimiento(movimientos.get(0));
-        Pair<Movimiento,Double> movimiento;
-        //Mientras que el movimiento no implique llegar a la meta, puede ser mejor
-        for (int i=1; i<movimientos.size() && optimo.getValue()!=0; i++) {
+
+        Pair<Movimiento, Double> movimiento;
+        Pair<Movimiento, Double> optimo = valorarMovimiento(movimientos.get(0));
+        for (int i=1; i<movimientos.size() && optimo.getValue()!=0 ; i++) {
             movimiento = valorarMovimiento(movimientos.get(i));
-            if (movimiento.getValue() >= 0 && movimiento.getValue()<optimo.getValue())
+            if (optimo.getValue()<0 || (movimiento.getValue()>=0 && movimiento.getValue()<optimo.getValue()))
                 optimo = movimiento;
         }
+
         agente.mover();
         entorno.moverAgente(optimo.getKey());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Comportamiento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
     }
 
     @Override
