@@ -2,6 +2,8 @@ package p2;
 
 import jade.core.behaviours.Behaviour;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.util.Pair;
 
 public class Comportamiento extends Behaviour {
@@ -27,6 +29,13 @@ public class Comportamiento extends Behaviour {
 
         agente.mover();
         entorno.moverAgente(optimo.getKey());
+        /*
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comportamiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+*/
     }
 
     @Override

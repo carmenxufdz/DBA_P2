@@ -47,7 +47,6 @@ public class Mapa {
             System.out.println("Error accediendo al archivo.");
             e.printStackTrace();
         }
-        
     }
     
     public int getFilas() {
@@ -62,8 +61,8 @@ public class Mapa {
         return matriz;
     }
     
-    public int getPos (int x, int y) {
-        return matriz[y][x];
+    public int getPos (int fila, int columna) {
+        return matriz[fila][columna];
     }
     
     public void mostrarMapa() {

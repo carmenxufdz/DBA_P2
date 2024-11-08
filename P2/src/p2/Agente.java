@@ -25,8 +25,8 @@ public class Agente extends Agent {
         sensores.add(Movimiento.OESTE);
         sensores.add(Movimiento.NOROESTE);
         
-        Mapa mapa = new Mapa ("./maps/mapWithComplexObstacle3.txt");
-        entorno = new Entorno (mapa, 6, 6, 2, 7);
+        Mapa mapa = new Mapa ("./maps/mapWithVerticalWall.txt");
+        entorno = new Entorno (mapa, 6, 6, 7, 2);
         
         entorno.mostrarEntorno();
         
