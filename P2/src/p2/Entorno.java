@@ -4,13 +4,15 @@ import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
+import javafx.util.Pair;
 
 public class Entorno {
     private Mapa mapa;
     private int[] posAgente = new int[2];
     private int[] posObjetivo = new int[2];
     private int[][] recorrido;
-    
+    public double distancia_actual;
+  
     public Entorno (String ruta, int filAgente, int colAgente, int filObjetivo, int colObjetivo) {
         mapa = new Mapa (ruta);
         // Al inicio por todas las celdas se ha pasado 0 veces
@@ -21,6 +23,7 @@ public class Entorno {
         pasarPor(filAgente, colAgente);
         posObjetivo[0] = filObjetivo;
         posObjetivo[1] = colObjetivo;
+        distancia_actual = calcularDistancia(posAgente[0], posAgente[1]);
     }
     
     public Entorno (Mapa m, int filAgente, int colAgente, int filObjetivo, int colObjetivo) {
@@ -33,6 +36,7 @@ public class Entorno {
         pasarPor(filAgente, colAgente);
         posObjetivo[0] = filObjetivo;
         posObjetivo[1] = colObjetivo;
+        distancia_actual = calcularDistancia(posAgente[0], posAgente[1]);
     }
     
     public void mostrarEntorno() {
@@ -57,7 +61,7 @@ public class Entorno {
         return posAgente[0] == posObjetivo[0] && posAgente[1] == posObjetivo[1];
     }
     
-    public double getEstado (Movimiento mov) {
+    public Pair<Double, Integer> getEstado (Movimiento mov) {
         // Hay que inicializarlas para que permita hacer calcularDistancia al final
         int fila= -1,columna= -1;
         // =-2 fuera del mapa, =-1 obstáculo, =0 libre
@@ -73,7 +77,7 @@ public class Entorno {
                 break;
             case NORESTE:
                 // Si no se puede norte ni este, no se puede noreste
-                if (getEstado(Movimiento.NORTE)>=0 || getEstado(Movimiento.ESTE)>=0) {
+                if (getEstado(Movimiento.NORTE).getKey() >=0 || getEstado(Movimiento.ESTE).getKey() >=0) {
                    columna = posAgente[1]-1;
                    fila = posAgente[0]+1;
                     if (columna > -1 && fila< mapa.getFilas()) {
@@ -90,7 +94,7 @@ public class Entorno {
                 break;
             case SURESTE:
                 // Si no se puede sur ni este, no se puede sureste
-                if (getEstado(Movimiento.SUR)>=0 || getEstado(Movimiento.ESTE)>=0) {
+                if (getEstado(Movimiento.SUR).getKey() >=0 || getEstado(Movimiento.ESTE).getKey() >=0) {
                    fila= posAgente[0]+1;
                    columna= posAgente[1]+1;
                     if (fila < mapa.getFilas() && columna < mapa.getColumnas()) {
@@ -107,7 +111,7 @@ public class Entorno {
                 break;
             case SUROESTE:
                 // Si no se puede sur ni oeste, no se puede suroeste
-                if (getEstado(Movimiento.SUR)>=0 || getEstado(Movimiento.OESTE)>=0) {
+                if (getEstado(Movimiento.SUR).getKey() >=0 || getEstado(Movimiento.OESTE).getKey() >=0) {
                    columna = posAgente[1]+1;
                    fila = posAgente[0]-1;
                     if (columna < mapa.getColumnas() && fila> -1) {
@@ -124,7 +128,7 @@ public class Entorno {
                 break;
             case NOROESTE:
                 // Si no se puede norte ni oeste, no se puede noroeste
-                if (getEstado(Movimiento.NORTE)>=0 || getEstado(Movimiento.OESTE)>=0) {
+                if (getEstado(Movimiento.NORTE).getKey() >=0 || getEstado(Movimiento.OESTE).getKey() >=0) {
                    fila = posAgente[0]-1;
                    columna = posAgente[1]-1;
                     if (fila > -1 && columna > -1) {
@@ -133,15 +137,16 @@ public class Entorno {
                 }
                 break;
         }
+        
+        int veces = 0;
         // Celda libre
         if (estado == 0) {
             // Se le añade el coste de la distancia
-            estado += calcularDistancia(fila, columna);
-            // Se le añade una penalización simple de ya haber pasado
-            estado += getVeces(fila, columna)*sqrt(mapa.getFilas()*mapa.getColumnas());
-            // Se le añade una penalización por alejarse del objetivo
+            estado += calcularDistancia(fila, columna);     
+            veces += getVeces(fila, columna);
         }
-        return estado;
+        
+        return new Pair<>(estado, veces);
     }
     
     public double calcularDistancia (int x, int y) {
@@ -182,6 +187,7 @@ public class Entorno {
                 break;
         }
         pasarPor(posAgente[0], posAgente[1]);
+        distancia_actual = calcularDistancia(posAgente[0], posAgente[1]);
         mostrarEntorno();
     }
     
@@ -193,6 +199,13 @@ public class Entorno {
         recorrido[f][c]++;
     }
     
+    public int getFilas(){
+        return mapa.getFilas();
+    }
+    
+    public int getColumnas(){
+        return mapa.getColumnas();
+    }
 }
 
 

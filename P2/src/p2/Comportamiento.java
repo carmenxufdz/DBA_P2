@@ -9,12 +9,12 @@ import javafx.util.Pair;
 public class Comportamiento extends Behaviour {
     private Entorno entorno;
     private Agente agente;
-    
+ 
     public Comportamiento(Entorno e, Agente a) {
         entorno = e;
         agente = a;
     }
-
+    
     @Override
     public void action() {
         ArrayList<Movimiento> movimientos = agente.getMovs();
@@ -23,12 +23,14 @@ public class Comportamiento extends Behaviour {
         Pair<Movimiento, Double> optimo = valorarMovimiento(movimientos.get(0));
         for (int i=1; i<movimientos.size() && optimo.getValue()!=0 ; i++) {
             movimiento = valorarMovimiento(movimientos.get(i));
-            if (optimo.getValue()<0 || (movimiento.getValue()>=0 && movimiento.getValue()<optimo.getValue()))
+            if (optimo.getValue()<0 || (movimiento.getValue()>=0 && movimiento.getValue()<optimo.getValue())){
                 optimo = movimiento;
+            }
         }
 
         agente.mover();
         entorno.moverAgente(optimo.getKey());
+        
         /*
         try {
             Thread.sleep(1000);
@@ -47,7 +49,21 @@ public class Comportamiento extends Behaviour {
     
     // Devuelve un pair del movimiento y el coste
     private Pair<Movimiento,Double> valorarMovimiento (Movimiento direccion) {
-        double valor = entorno.getEstado(direccion);
+        Pair<Double, Integer> estado = entorno.getEstado(direccion);
+        double valor = estado.getKey();
+        double tam_mapa = Math.sqrt(entorno.getFilas()*entorno.getFilas() + entorno.getColumnas()*entorno.getColumnas());
+        
+        if(valor >= 0){
+            int veces = estado.getValue();
+            
+            if(entorno.distancia_actual > valor && valor >= 1){
+                valor -= 1;
+            }
+
+            valor += veces*tam_mapa;
+        
+            
+        }
         return new Pair<> (direccion, valor);
     }
 }
