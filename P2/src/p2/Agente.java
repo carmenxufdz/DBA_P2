@@ -1,9 +1,7 @@
 package p2;
 
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import java.util.ArrayList;
-import javafx.util.Pair;
 
 /**
  *
@@ -12,23 +10,23 @@ import javafx.util.Pair;
 public class Agente extends Agent {
     private Entorno entorno;
     private int energia;
-    private ArrayList<Movimiento> movimientos;
+    private ArrayList<Movimiento> sensores;
     
     @Override
     protected void setup() {
         energia = 0;
-        movimientos = new ArrayList<>();
-        movimientos.add(Movimiento.NORTE);
-        movimientos.add(Movimiento.NORESTE);
-        movimientos.add(Movimiento.ESTE);
-        movimientos.add(Movimiento.SURESTE);
-        movimientos.add(Movimiento.SUR);
-        movimientos.add(Movimiento.SUROESTE);
-        movimientos.add(Movimiento.OESTE);
-        movimientos.add(Movimiento.NOROESTE);
+        sensores = new ArrayList<>();
+        sensores.add(Movimiento.NORTE);
+        sensores.add(Movimiento.NORESTE);
+        sensores.add(Movimiento.ESTE);
+        sensores.add(Movimiento.SURESTE);
+        sensores.add(Movimiento.SUR);
+        sensores.add(Movimiento.SUROESTE);
+        sensores.add(Movimiento.OESTE);
+        sensores.add(Movimiento.NOROESTE);
         
         Mapa mapa = new Mapa ("./maps/mapWithComplexObstacle3.txt");
-        entorno = new Entorno (mapa, 0, 0, 9, 9);
+        entorno = new Entorno (mapa, 6, 6, 2, 7);
         
         entorno.mostrarEntorno();
         
@@ -41,7 +39,7 @@ public class Agente extends Agent {
     }
     
     public ArrayList<Movimiento> getMovs() {
-        return movimientos;
+        return sensores;
     }
     
     public void mover() {
