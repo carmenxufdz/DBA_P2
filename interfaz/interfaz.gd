@@ -3,14 +3,12 @@ extends Node
 var client := StreamPeerTCP.new()
 var host := "127.0.0.1"  # Dirección IP del servidor
 var port := 5000         # Puerto del servidor
-var is_connected := false
-
 var mapa_path := ""
 
 @onready var menu := $Menu
-@onready var file := $FileDialog
+@onready var fileDialog := $FileDialog
 @onready var next := $Next
-@onready var entorno := $Entorno
+@onready var vista := $vista
 
 func _ready():
 	iniciar_conexion()
@@ -24,8 +22,8 @@ func iniciar_conexion():
 	else:
 		print("Error al intentar conectar: ", err)
 
+@warning_ignore("unused_parameter")
 func _process(delta):
-	var status = client.get_status()
 	client.poll()
 
 func send_message(message):
@@ -47,12 +45,12 @@ func _on_iniciar_pressed() -> void:
 	menu.hide()
 	next.show()
 	file_read()
-	entorno.show()
+	vista.show()
 	
 
 func _on_elegir_mapa_pressed() -> void:
 	send_message("CHOOSE_MAP")
-	file.popup()
+	fileDialog.popup()
 	
 
 
@@ -64,7 +62,6 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 func _on_next_pressed() -> void:
 	send_message("STEP")
-	await "receive_response"
 	file_read()
 	next.disabled = true
 

@@ -80,11 +80,7 @@ public class Agente extends Agent implements AgenteInterface{
         mapa = new Mapa(new_path);
     }
 
-    @Override
-    public String moverAgente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+ 
     // Implementación de la interfaz para iniciar el comportamiento
     @Override
     public void iniciarComportamiento() {
@@ -97,9 +93,5 @@ public class Agente extends Agent implements AgenteInterface{
         addBehaviour(comportamiento);
     }
 
-    @Override
-    public void activarMovimiento() {
-        comportamiento.activarMovimiento();
-    }
     
 }

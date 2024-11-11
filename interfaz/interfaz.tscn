@@ -1,10 +1,45 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuqknnptx21d5"]
+[gd_scene load_steps=15 format=3 uid="uid://cuqknnptx21d5"]
 
 [ext_resource type="Script" path="res://interfaz.gd" id="1_m35fa"]
 [ext_resource type="Texture2D" uid="uid://bo77cc1mo17hf" path="res://assets/power.png" id="2_u3dmv"]
 [ext_resource type="Texture2D" uid="uid://cwwcwkipssy67" path="res://assets/forward.png" id="2_vxpbi"]
 [ext_resource type="Texture2D" uid="uid://bpwit8nltdeuc" path="res://assets/export.png" id="3_yhh86"]
-[ext_resource type="Script" path="res://entorno.gd" id="5_7cpr1"]
+[ext_resource type="Script" path="res://vista.gd" id="5_7cpr1"]
+[ext_resource type="Texture2D" uid="uid://c83wgpioov6nl" path="res://assets/suelo0.png" id="7_q68rk"]
+[ext_resource type="Texture2D" uid="uid://cmpfo5g50iag7" path="res://assets/muro.png" id="8_t5t8t"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ck05"]
+texture = ExtResource("7_q68rk")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wn73u"]
+texture = ExtResource("8_t5t8t")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bu52r"]
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "suelo0"
+terrain_set_0/terrain_0/color = Color(0.230609, 0.440799, 0.248653, 1)
+terrain_set_0/terrain_1/name = "muro"
+terrain_set_0/terrain_1/color = Color(0.255659, 0.255659, 0.255659, 1)
+sources/1 = SubResource("TileSetAtlasSource_2ck05")
+sources/2 = SubResource("TileSetAtlasSource_wn73u")
+
+[sub_resource type="TileSet" id="TileSet_k8xtc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cejbh"]
+resource_name = "suelo0"
+texture = ExtResource("7_q68rk")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pk1sl"]
+resource_name = "muro"
+texture = ExtResource("8_t5t8t")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_te8oy"]
+sources/0 = SubResource("TileSetAtlasSource_cejbh")
+sources/1 = SubResource("TileSetAtlasSource_pk1sl")
 
 [node name="Interfaz" type="Node"]
 script = ExtResource("1_m35fa")
@@ -51,9 +86,19 @@ offset_bottom = 644.0
 disabled = true
 icon = ExtResource("2_vxpbi")
 
-[node name="Entorno" type="Node2D" parent="."]
-visible = false
+[node name="vista" type="Node2D" parent="."]
 script = ExtResource("5_7cpr1")
+
+[node name="Suelo" type="TileMapLayer" parent="vista"]
+tile_set = SubResource("TileSet_bu52r")
+
+[node name="Recorrido" type="TileMapLayer" parent="vista"]
+tile_set = SubResource("TileSet_k8xtc")
+
+[node name="TileMap" type="TileMap" parent="vista"]
+tile_set = SubResource("TileSet_te8oy")
+format = 2
+layer_0/name = "suelo"
 
 [node name="Timer" type="Timer" parent="."]
 

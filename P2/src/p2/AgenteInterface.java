@@ -10,9 +10,7 @@ package p2;
  */
 public interface AgenteInterface {
     void cargarMapa(String ruta);
-    String moverAgente();
     void iniciarComportamiento();
-    void activarMovimiento();
     Entorno getEntorno();
 }
 
