@@ -9,6 +9,7 @@ import javafx.util.Pair;
 public class Comportamiento extends Behaviour {
     private Entorno entorno;
     private Agente agente;
+    private boolean mover = false;
  
     public Comportamiento(Entorno e, Agente a) {
         entorno = e;
@@ -27,9 +28,12 @@ public class Comportamiento extends Behaviour {
                 optimo = movimiento;
             }
         }
-
-        agente.mover();
-        entorno.moverAgente(optimo.getKey());
+        
+        if(mover){
+            agente.mover();
+            entorno.moverAgente(optimo.getKey());
+            mover = false;
+        }
         
         /*
         try {
@@ -65,5 +69,9 @@ public class Comportamiento extends Behaviour {
             
         }
         return new Pair<> (direccion, valor);
+    }
+    // Método para cambiar el estado de "mover" desde otro comportamiento
+    public void activarMovimiento() {
+        mover = true; // Cambia el estado para permitir que el agente se mueva
     }
 }

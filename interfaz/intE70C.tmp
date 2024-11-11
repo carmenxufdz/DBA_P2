@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuqknnptx21d5"]
+
+[ext_resource type="Script" path="res://interfaz.gd" id="1_m35fa"]
+[ext_resource type="Texture2D" uid="uid://bo77cc1mo17hf" path="res://assets/power.png" id="2_rr214"]
+
+[node name="Interfaz" type="Node"]
+script = ExtResource("1_m35fa")
+
+[node name="Iniciar" type="MenuButton" parent="."]
+offset_left = 512.0
+offset_top = 288.0
+offset_right = 633.0
+offset_bottom = 346.0
+text = "INICIAR"
+icon = ExtResource("2_rr214")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="pressed" from="Iniciar" to="." method="_on_iniciar_pressed"]
