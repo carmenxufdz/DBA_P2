@@ -12,5 +12,7 @@ public interface AgenteInterface {
     void cargarMapa(String ruta);
     void iniciarComportamiento();
     Entorno getEntorno();
+    void moverAgente();
+    boolean terminado();
 }
 

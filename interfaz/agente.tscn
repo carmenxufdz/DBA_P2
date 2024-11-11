@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://cpdk2a1mhwlpa"]
+
+[ext_resource type="Texture2D" uid="uid://d04xm460ckn5a" path="res://assets/Idle_KG_1.png" id="1_cwtr1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otbfl"]
+atlas = ExtResource("1_cwtr1")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ficck"]
+atlas = ExtResource("1_cwtr1")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7fbl"]
+atlas = ExtResource("1_cwtr1")
+region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vx23"]
+atlas = ExtResource("1_cwtr1")
+region = Rect2(300, 0, 100, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kr7lw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_otbfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ficck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7fbl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vx23")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Agente" type="AnimatedSprite2D"]
+position = Vector2(0, 32)
+sprite_frames = SubResource("SpriteFrames_kr7lw")
+frame = 3
+frame_progress = 0.383355

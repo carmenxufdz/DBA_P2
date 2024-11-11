@@ -58,7 +58,6 @@ class Entorno:
 	var distancia_actual : float
 	var recorrido : Array
 
-	@warning_ignore("shadowed_variable")
 	func _init(mapa, posAgente, posObjetivo, distancia_actual, recorrido):
 		self.mapa = mapa
 		self.posAgente = posAgente
@@ -106,16 +105,24 @@ class Entorno:
 	func set_recorrido(value: Array) -> void:
 		recorrido = value
 
+@onready var tileMap = $Mapa
+@onready var agente := $Agente
+@onready var meta := $Meta
 
-@onready var suelo = $Suelo
-@onready var tileMap = $TileMap
+var tile_size = 16*4.5
 
 func _ready():
 	Signals.connect("file_read",Callable(self, "_actualizar"),CONNECT_DEFERRED)
+	Signals.connect("mapa_read",Callable(self, "_mapa_paint"),CONNECT_DEFERRED)
+	Signals.connect("entorno_updated",Callable(self, "_update"),CONNECT_DEFERRED)
+	agente.play()
+	meta.play()
 
+func _proccess(delta):
+	if finished():
+		Signals.emit_signal("finished")
 
-
-func _actualizar() -> void:
+func _mapa_paint() -> void:
 	var file = FileAccess.open("res://entorno.json", FileAccess.READ)
 	if file:
 		var json_data = file.get_as_text()
@@ -128,7 +135,25 @@ func _actualizar() -> void:
 			var mapa = save_mapa(mapa_data)
 			var entorno = save_entorno(data,mapa)
 			pintar_mapa(mapa)
-			Signals.emit_signal("file_updated")
+			pintar_entorno(entorno)
+		else:
+			print("Error al parsear el JSON")
+	else:
+		print("No se pudo abrir el archivo JSON")
+		
+func _actualizar() -> void:
+	var file = FileAccess.open("res://entorno.json", FileAccess.READ)
+	if file:
+		var json_data = file.get_as_text()
+		file.close()
+		var json = JSON.new()
+		var parse_err = json.parse(json_data)
+		if parse_err == OK:
+			var data = json.get_data()
+			var mapa_data = data["mapa"]
+			var mapa = save_mapa(mapa_data)
+			var entorno = save_entorno(data,mapa)
+			pintar_entorno(entorno)
 		else:
 			print("Error al parsear el JSON")
 	else:
@@ -169,8 +194,35 @@ func leer_mapa_desde_txt(ruta:String) -> Mapa:
 	
 	return Mapa.new(ruta, N, M, matriz)
 
-
+func pintar_entorno(entorno:Entorno)->void:
+	agente.position.y = entorno.get_pos_agente()[0] * tile_size + tile_size/2
+	agente.position.x = entorno.get_pos_agente()[1] * tile_size + tile_size/2
+	meta.position.y = entorno.get_pos_objetivo()[0] * tile_size + tile_size/2
+	meta.position.x = entorno.get_pos_objetivo()[1] * tile_size + tile_size/2
 	
+	if not agente.visible:
+		agente.show()
+	if not meta.visible:
+		meta.show()
+	tileMap.set_cell(2,Vector2i(entorno.get_pos_objetivo()[1],entorno.get_pos_objetivo()[0]),7,Vector2i(0,0),0)
+	for y in range(entorno.mapa.get_N()):
+		for x in range(entorno.mapa.get_M()):
+			match int(entorno.get_recorrido()[y][x]):
+				0:
+					pass
+				1:
+					tileMap.set_cell(1,Vector2i(x,y),2,Vector2i(0,0),0)
+				2:
+					tileMap.set_cell(1,Vector2i(x,y),3,Vector2i(0,0),0)
+				3:
+					tileMap.set_cell(1,Vector2i(x,y),4,Vector2i(0,0),0)
+				4:
+					tileMap.set_cell(1,Vector2i(x,y),5,Vector2i(0,0),0)
+				5:
+					tileMap.set_cell(1,Vector2i(x,y),6,Vector2i(0,0),0)
+	
+	Signals.emit_signal("entorno_updated")
+
 func pintar_mapa(mapa : Mapa) -> void:
 	for y in range(mapa.get_N()):
 		for x in range(mapa.get_M()):
@@ -178,4 +230,10 @@ func pintar_mapa(mapa : Mapa) -> void:
 				tileMap.set_cell(0,Vector2i(x,y),0,Vector2i(0,0),0)
 			elif mapa.matriz[y][x] == -1:
 				tileMap.set_cell(0,Vector2i(x,y),1,Vector2i(0,0),0)
-	
+	Signals.emit_signal("mapa_updated")
+
+func _update() -> void:
+	Signals.emit_signal("file_updated")
+
+func finished() -> bool:
+	return agente.position == meta.position

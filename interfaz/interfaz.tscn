@@ -1,31 +1,19 @@
-[gd_scene load_steps=15 format=3 uid="uid://cuqknnptx21d5"]
+[gd_scene load_steps=24 format=3 uid="uid://cuqknnptx21d5"]
 
 [ext_resource type="Script" path="res://interfaz.gd" id="1_m35fa"]
 [ext_resource type="Texture2D" uid="uid://bo77cc1mo17hf" path="res://assets/power.png" id="2_u3dmv"]
-[ext_resource type="Texture2D" uid="uid://cwwcwkipssy67" path="res://assets/forward.png" id="2_vxpbi"]
 [ext_resource type="Texture2D" uid="uid://bpwit8nltdeuc" path="res://assets/export.png" id="3_yhh86"]
 [ext_resource type="Script" path="res://vista.gd" id="5_7cpr1"]
+[ext_resource type="Texture2D" uid="uid://c8kay1y5d8hk2" path="res://assets/suelo1.png" id="5_mp3fl"]
+[ext_resource type="Texture2D" uid="uid://cwqrdf8h40q0e" path="res://assets/suelo2.png" id="6_rn82y"]
+[ext_resource type="PackedScene" uid="uid://cpdk2a1mhwlpa" path="res://agente.tscn" id="7_6xt07"]
+[ext_resource type="Texture2D" uid="uid://byluph8e41ttq" path="res://assets/arbol1.png" id="7_67pjm"]
 [ext_resource type="Texture2D" uid="uid://c83wgpioov6nl" path="res://assets/suelo0.png" id="7_q68rk"]
+[ext_resource type="Texture2D" uid="uid://bf63gp40gccks" path="res://assets/arbol2.png" id="8_6up3o"]
 [ext_resource type="Texture2D" uid="uid://cmpfo5g50iag7" path="res://assets/muro.png" id="8_t5t8t"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ck05"]
-texture = ExtResource("7_q68rk")
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wn73u"]
-texture = ExtResource("8_t5t8t")
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_bu52r"]
-terrain_set_0/mode = 0
-terrain_set_0/terrain_0/name = "suelo0"
-terrain_set_0/terrain_0/color = Color(0.230609, 0.440799, 0.248653, 1)
-terrain_set_0/terrain_1/name = "muro"
-terrain_set_0/terrain_1/color = Color(0.255659, 0.255659, 0.255659, 1)
-sources/1 = SubResource("TileSetAtlasSource_2ck05")
-sources/2 = SubResource("TileSetAtlasSource_wn73u")
-
-[sub_resource type="TileSet" id="TileSet_k8xtc"]
+[ext_resource type="Texture2D" uid="uid://dcvm4nv0lepan" path="res://assets/seta.png" id="9_edmot"]
+[ext_resource type="PackedScene" uid="uid://c2t4jii1jh12c" path="res://meta.tscn" id="10_ehkqh"]
+[ext_resource type="Texture2D" uid="uid://cbypxt78hmmou" path="res://assets/tileMeta.png" id="10_ibqmx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cejbh"]
 resource_name = "suelo0"
@@ -37,34 +25,95 @@ resource_name = "muro"
 texture = ExtResource("8_t5t8t")
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t3wkh"]
+resource_name = "suelo1"
+texture = ExtResource("5_mp3fl")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0vdlq"]
+resource_name = "suelo2"
+texture = ExtResource("6_rn82y")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2oct5"]
+resource_name = "arbol1"
+texture = ExtResource("7_67pjm")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_htmpm"]
+resource_name = "arbol2"
+texture = ExtResource("8_6up3o")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5dl0u"]
+resource_name = "seta"
+texture = ExtResource("9_edmot")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mm1qe"]
+resource_name = "meta"
+texture = ExtResource("10_ibqmx")
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_te8oy"]
 sources/0 = SubResource("TileSetAtlasSource_cejbh")
 sources/1 = SubResource("TileSetAtlasSource_pk1sl")
+sources/2 = SubResource("TileSetAtlasSource_t3wkh")
+sources/3 = SubResource("TileSetAtlasSource_0vdlq")
+sources/4 = SubResource("TileSetAtlasSource_2oct5")
+sources/5 = SubResource("TileSetAtlasSource_htmpm")
+sources/6 = SubResource("TileSetAtlasSource_5dl0u")
+sources/7 = SubResource("TileSetAtlasSource_mm1qe")
 
 [node name="Interfaz" type="Node"]
 script = ExtResource("1_m35fa")
 
+[node name="vista" type="Node2D" parent="."]
+visible = false
+script = ExtResource("5_7cpr1")
+
+[node name="Mapa" type="TileMap" parent="vista"]
+scale = Vector2(4.5, 4.5)
+tile_set = SubResource("TileSet_te8oy")
+format = 2
+layer_0/name = "suelo"
+layer_1/name = "recorrido"
+layer_2/name = "meta"
+
+[node name="Meta" parent="vista" instance=ExtResource("10_ehkqh")]
+visible = false
+
+[node name="Agente" parent="vista" instance=ExtResource("7_6xt07")]
+visible = false
+position = Vector2(258, 110)
+
 [node name="Menu" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_left = 512.0
-offset_top = 288.0
-offset_right = 552.0
-offset_bottom = 328.0
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 387.0
+offset_right = -370.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Iniciar" type="MenuButton" parent="Menu"]
-layout_mode = 0
-offset_top = -74.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -58.0
 offset_right = 121.0
-offset_bottom = -16.0
+grow_vertical = 0
 text = "INICIAR"
 icon = ExtResource("2_u3dmv")
 
 [node name="ElegirMapa" type="MenuButton" parent="Menu"]
-layout_mode = 0
-offset_top = -14.0
+layout_mode = 1
 offset_right = 166.0
-offset_bottom = 44.0
+offset_bottom = 58.0
 text = "ELEGIR MAPA"
 icon = ExtResource("3_yhh86")
 
@@ -77,32 +126,8 @@ ok_button_text = "Open"
 dialog_hide_on_ok = true
 file_mode = 0
 
-[node name="Next" type="MenuButton" parent="."]
-visible = false
-offset_left = 541.0
-offset_top = 586.0
-offset_right = 599.0
-offset_bottom = 644.0
-disabled = true
-icon = ExtResource("2_vxpbi")
-
-[node name="vista" type="Node2D" parent="."]
-script = ExtResource("5_7cpr1")
-
-[node name="Suelo" type="TileMapLayer" parent="vista"]
-tile_set = SubResource("TileSet_bu52r")
-
-[node name="Recorrido" type="TileMapLayer" parent="vista"]
-tile_set = SubResource("TileSet_k8xtc")
-
-[node name="TileMap" type="TileMap" parent="vista"]
-tile_set = SubResource("TileSet_te8oy")
-format = 2
-layer_0/name = "suelo"
-
 [node name="Timer" type="Timer" parent="."]
 
 [connection signal="pressed" from="Menu/Iniciar" to="." method="_on_iniciar_pressed"]
 [connection signal="pressed" from="Menu/ElegirMapa" to="." method="_on_elegir_mapa_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="pressed" from="Next" to="." method="_on_next_pressed"]

@@ -63,7 +63,6 @@ public class P2interfaz {
                             System.out.println("Comando recibido: '" + inputLine.trim() + "'");
                             String response = processCommand(inputLine.trim());
                             
-                            agenteController.wait();
                             out.println(response);  // Enviar respuesta
 
                             if ("exit".equalsIgnoreCase(inputLine.trim())) {
@@ -105,7 +104,8 @@ public class P2interfaz {
                     System.out.println("Error al leer del cliente");
                     e.printStackTrace();
                 }
-
+            case "EXIT":
+                return "Cliente desconectado";
             default:
                 return "Comando desconocido";
         }
@@ -148,7 +148,7 @@ public class P2interfaz {
         try {
             if (agenteController != null) {
                 // Llama al método para establecer el mapa en el agente
-                agenteController.notify();
+                agenteController.getO2AInterface(AgenteInterface.class).moverAgente();
                 getEntorno();
                 return "Next";
             } else {

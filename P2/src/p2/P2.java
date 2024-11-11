@@ -34,6 +34,7 @@ public class P2 {
         agenteController.start();
         AgenteInterface agenteInterface = (AgenteInterface) agenteController.getO2AInterface(AgenteInterface.class);
         agenteInterface.iniciarComportamiento();
+        
     }
     
 }

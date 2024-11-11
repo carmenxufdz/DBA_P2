@@ -15,8 +15,9 @@ public class Agente extends Agent implements AgenteInterface{
     private double mejor_distancia;
     private int fila_incial = 6;
     private int columna_inicial = 6;
-    private int fila_final = 7;
-    private int columna_final = 2;
+    private int fila_final = 2;
+    private int columna_final = 7;
+    
     
     private Comportamiento comportamiento;
     
@@ -36,7 +37,7 @@ public class Agente extends Agent implements AgenteInterface{
         sensores.add(Movimiento.OESTE);
         sensores.add(Movimiento.NOROESTE);
         
-        mapa = new Mapa ("./maps/mapWithVerticalWall.txt");
+        mapa = new Mapa ("./maps/mapWithComplexObstacle3.txt");
         
         
         setEnabledO2ACommunication(true, 10);
@@ -91,6 +92,16 @@ public class Agente extends Agent implements AgenteInterface{
         mejor_distancia = entorno.calcularDistancia(fila_incial, columna_inicial);
         comportamiento = new Comportamiento(entorno, this);
         addBehaviour(comportamiento);
+    }
+
+    @Override
+    public void moverAgente() {
+        comportamiento.moverAgente();
+    }
+
+    @Override
+    public boolean terminado() {
+        return comportamiento.terminado();
     }
 
     
