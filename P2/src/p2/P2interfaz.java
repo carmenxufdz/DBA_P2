@@ -104,8 +104,6 @@ public class P2interfaz {
                     System.out.println("Error al leer del cliente");
                     e.printStackTrace();
                 }
-            case "EXIT":
-                return "Cliente desconectado";
             default:
                 return "Comando desconocido";
         }
@@ -150,7 +148,8 @@ public class P2interfaz {
                 // Llama al método para establecer el mapa en el agente
                 agenteController.getO2AInterface(AgenteInterface.class).moverAgente();
                 getEntorno();
-                return "Next";
+                int energia = agenteController.getO2AInterface(AgenteInterface.class).Energia();
+                return String.valueOf(energia);
             } else {
                 return "Agente no iniciado. Usa el comando 'INICIAR' primero.";
             }

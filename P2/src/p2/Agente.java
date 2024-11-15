@@ -17,6 +17,7 @@ public class Agente extends Agent implements AgenteInterface{
     private int fila_final = 0;
     private int columna_final = 5;
     private double distancia_actual;
+
     
     private Comportamiento comportamiento;
     
@@ -41,7 +42,6 @@ public class Agente extends Agent implements AgenteInterface{
         
         
         setEnabledO2ACommunication(true, 10);
-        
     }
     
     public void setDistanciaActual(){
@@ -72,10 +72,6 @@ public class Agente extends Agent implements AgenteInterface{
         return entorno;
     }
     
-    public Mapa getMapa(){
-        return mapa;
-    }
-    
 
     @Override
     public void cargarMapa(String path) {
@@ -101,8 +97,8 @@ public class Agente extends Agent implements AgenteInterface{
     }
 
     @Override
-    public boolean terminado() {
-        return comportamiento.terminado();
+    public int Energia() {
+        return this.energia;
     }
 
     

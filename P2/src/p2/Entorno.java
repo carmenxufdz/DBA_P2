@@ -214,25 +214,6 @@ public class Entorno {
         return mapa.getColumnas();
     }
     
-    public Mapa getMapa(){
-        return this.mapa;
-    }
-    
-    public int getFila(){
-        return this.posAgente[0];
-    }
-    
-    public int getColumna(){
-        return this.posAgente[1];
-    }
-    
-    public int getFilabOjetivo(){
-        return this.posObjetivo[0];
-    }
-    
-    public int getColumnaOjetivo(){
-        return this.posObjetivo[1];
-    }
    
 }
 

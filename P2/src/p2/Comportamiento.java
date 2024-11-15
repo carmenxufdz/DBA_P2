@@ -10,7 +10,6 @@ public class Comportamiento extends Behaviour {
     private Entorno entorno;
     private Agente agente;
     private boolean move = false;
-    
     private boolean terminado = false;
  
     public Comportamiento(Entorno e, Agente a) {
@@ -70,9 +69,7 @@ public class Comportamiento extends Behaviour {
                 
             }
 
-            valor += veces*tam_mapa;
-        
-            
+            valor += veces*tam_mapa;  
         }
         return new Pair<> (direccion, valor);
     }
