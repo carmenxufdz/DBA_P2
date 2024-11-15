@@ -57,7 +57,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 func read_mapa():
-	var ruta_entrada = "C:/Users/carme/OneDrive/Documentos/Universidad/4GII/PRIMER_CUATRI/Desarrollo Basado en Agentes/Practicas/DBA_UGR/P2/json/entorno.json"
+	var ruta_entrada = "C:/Users/carlo/Desktop/Universidad/DBA/Practica_2/DBA_UGR/P2/json/entorno.json"
 	var ruta_salida = "res://entorno.json"
 	
 	$Timer.start(5)
@@ -87,7 +87,7 @@ func read_mapa():
 
 
 func file_read():
-	var ruta_entrada = "C:/Users/carme/OneDrive/Documentos/Universidad/4GII/PRIMER_CUATRI/Desarrollo Basado en Agentes/Practicas/DBA_UGR/P2/json/entorno.json"
+	var ruta_entrada = "C:/Users/carlo/Desktop/Universidad/DBA/Practica_2/DBA_UGR/P2/json/entorno.json"
 	var ruta_salida = "res://entorno.json"
 	
 	$Timer.start(1)
