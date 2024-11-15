@@ -70,6 +70,7 @@ script = ExtResource("1_m35fa")
 
 [node name="vista" type="Node2D" parent="."]
 visible = false
+position = Vector2(0, -1)
 script = ExtResource("5_7cpr1")
 
 [node name="Mapa" type="TileMap" parent="vista"]
@@ -88,10 +89,13 @@ visible = false
 position = Vector2(258, 110)
 
 [node name="Energia" type="Label" parent="vista"]
-visible = false
-offset_right = 156.0
-offset_bottom = 23.0
-text = "Energia consumida: "
+offset_left = 860.0
+offset_top = 345.0
+offset_right = 940.0
+offset_bottom = 368.0
+size_flags_vertical = 1
+text = "Energia:  0"
+metadata/_edit_use_anchors_ = true
 
 [node name="Menu" type="Control" parent="."]
 layout_mode = 3
@@ -99,7 +103,7 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 387.0
+offset_left = 492.0
 offset_right = -370.0
 offset_bottom = 3.0
 grow_horizontal = 2

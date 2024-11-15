@@ -13,6 +13,6 @@ public interface AgenteInterface {
     public void iniciarComportamiento();
     public Entorno getEntorno();
     public void moverAgente();
-    public int Energia();
+    public String Energia();
 }
 

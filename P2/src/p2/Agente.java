@@ -97,8 +97,8 @@ public class Agente extends Agent implements AgenteInterface{
     }
 
     @Override
-    public int Energia() {
-        return this.energia;
+    public String Energia() {
+        return "Energia:" + this.energia;
     }
 
     

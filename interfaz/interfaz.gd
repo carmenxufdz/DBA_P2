@@ -8,9 +8,9 @@ var mapa_path := ""
 @onready var menu := $Menu
 @onready var fileDialog := $FileDialog
 @onready var vista := $vista
-@onready var energia := $vista/Energia
+@onready var energia_label := $vista/Energia
 
-const ruta_absoluta = "C:/Users/Usuario/Documents/DBA/Practica2/DBA_UGR/P2/json/entorno.json"
+const rutaa_absoluta = "C:/Users/carme/OneDrive/Documentos/Universidad/4GII/PRIMER_CUATRI/Desarrollo Basado en Agentes/Practicas/DBA_UGR/P2/json/entorno.json"
 
 func _ready():
 	iniciar_conexion()
@@ -38,6 +38,9 @@ func receive_response():
 	if client.get_available_bytes() > 0:
 		var respuesta = client.get_utf8_string(client.get_available_bytes())
 		print("Respuesta del servidor: ", respuesta)
+		if respuesta.find("Energia:") != -1:
+			var energia = respuesta.split(":")[1].strip_edges().to_int()
+			actualizar_energia(energia)
 		
 
 func _on_iniciar_pressed() -> void:
@@ -46,8 +49,6 @@ func _on_iniciar_pressed() -> void:
 	menu.hide()
 	read_mapa()
 	vista.show()
-	
-	
 	
 
 func _on_elegir_mapa_pressed() -> void:
@@ -62,8 +63,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 func read_mapa():
-
-	var ruta_entrada = ruta_absoluta
+	var ruta_entrada = rutaa_absoluta
 	var ruta_salida = "res://entorno.json"
 	
 	$Timer.start(5)
@@ -93,8 +93,7 @@ func read_mapa():
 
 
 func file_read():
-
-	var ruta_entrada = ruta_absoluta
+	var ruta_entrada = rutaa_absoluta
 	var ruta_salida = "res://entorno.json"
 	
 	$Timer.start(1)
@@ -132,3 +131,5 @@ func _finished() -> void:
 	client.disconnect_from_host()
 	print("Cliente desconectado.")
 	
+func actualizar_energia(energia) -> void:
+	energia_label.text = "Energía: %d" % energia

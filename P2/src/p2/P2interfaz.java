@@ -148,8 +148,8 @@ public class P2interfaz {
                 // Llama al método para establecer el mapa en el agente
                 agenteController.getO2AInterface(AgenteInterface.class).moverAgente();
                 getEntorno();
-                int energia = agenteController.getO2AInterface(AgenteInterface.class).Energia();
-                return String.valueOf(energia);
+                String energia = (agenteController.getO2AInterface(AgenteInterface.class).Energia());
+                return energia;
             } else {
                 return "Agente no iniciado. Usa el comando 'INICIAR' primero.";
             }

@@ -55,14 +55,12 @@ class Entorno:
 	var mapa : Mapa
 	var posAgente : Array
 	var posObjetivo : Array
-	var distancia_actual : float
 	var recorrido : Array
 
-	func _init(mapa, posAgente, posObjetivo, distancia_actual, recorrido):
+	func _init(mapa, posAgente, posObjetivo, recorrido):
 		self.mapa = mapa
 		self.posAgente = posAgente
 		self.posObjetivo = posObjetivo
-		self.distancia_actual = distancia_actual
 		self.recorrido = recorrido
 	
 	# Getter para 'mapa'
@@ -88,14 +86,6 @@ class Entorno:
 	# Setter para 'posObjetivo'
 	func set_pos_objetivo(value: Array) -> void:
 		posObjetivo = value
-
-	# Getter para 'distancia_actual'
-	func get_distancia_actual() -> float:
-		return distancia_actual
-
-	# Setter para 'distancia_actual'
-	func set_distancia_actual(value: float) -> void:
-		distancia_actual = value
 
 	# Getter para 'recorrido'
 	func get_recorrido() -> Array:
@@ -168,11 +158,10 @@ func save_mapa(data) -> Mapa:
 	return mapa
 	
 func save_entorno(data, mapa: Mapa) -> Entorno:
-	var entorno = Entorno.new(mapa, data["posAgente"], data["posObjetivo"], data["distancia_actual"], data["recorrido"])
+	var entorno = Entorno.new(mapa, data["posAgente"], data["posObjetivo"], data["recorrido"])
 	print("Mapa: ", entorno.mapa)
 	print("Posición Agente: ", entorno.posAgente)
 	print("Posición Objetivo: ", entorno.posObjetivo)
-	print("Distancia Actual: ", entorno.distancia_actual)
 	print("Recorrido: ", entorno.recorrido)
 	return entorno
 
@@ -195,6 +184,7 @@ func leer_mapa_desde_txt(ruta:String) -> Mapa:
 	return Mapa.new(ruta, N, M, matriz)
 
 func pintar_entorno(entorno:Entorno)->void:
+
 	agente.position.y = entorno.get_pos_agente()[0] * tile_size + tile_size/2
 	agente.position.x = entorno.get_pos_agente()[1] * tile_size + tile_size/2
 	meta.position.y = entorno.get_pos_objetivo()[0] * tile_size + tile_size/2
