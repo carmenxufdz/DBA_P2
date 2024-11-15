@@ -87,6 +87,12 @@ visible = false
 visible = false
 position = Vector2(258, 110)
 
+[node name="Energia" type="Label" parent="vista"]
+visible = false
+offset_right = 156.0
+offset_bottom = 23.0
+text = "Energia consumida: "
+
 [node name="Menu" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 14
