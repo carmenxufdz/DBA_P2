@@ -13,7 +13,6 @@ public class Entorno {
     private int[] posAgente = new int[2];
     private int[] posObjetivo = new int[2];
     private int[][] recorrido;
-    public double distancia_actual;
   
     public Entorno (String ruta, int filAgente, int colAgente, int filObjetivo, int colObjetivo) {
         mapa = new Mapa (ruta);
@@ -25,7 +24,6 @@ public class Entorno {
         pasarPor(filAgente, colAgente);
         posObjetivo[0] = filObjetivo;
         posObjetivo[1] = colObjetivo;
-        distancia_actual = calcularDistancia(posAgente[0], posAgente[1]);
     }
     
     public Entorno (Mapa m, int filAgente, int colAgente, int filObjetivo, int colObjetivo) {
@@ -38,8 +36,9 @@ public class Entorno {
         pasarPor(filAgente, colAgente);
         posObjetivo[0] = filObjetivo;
         posObjetivo[1] = colObjetivo;
-        distancia_actual = calcularDistancia(posAgente[0], posAgente[1]);
+        
     }
+    
     
     public void mostrarEntorno() {
         for (int fila=0; fila<mapa.getFilas() ; fila++) {
@@ -61,6 +60,10 @@ public class Entorno {
     
     public boolean agenteEnMeta() {
         return posAgente[0] == posObjetivo[0] && posAgente[1] == posObjetivo[1];
+    }
+    
+    public double getDistanciaActual(){
+        return calcularDistancia(posAgente[0], posAgente[1]);
     }
     
     public Pair<Double, Integer> getEstado (Movimiento mov) {
@@ -154,6 +157,9 @@ public class Entorno {
     public double calcularDistancia (int x, int y) {
         // Distancia Euclidiana
         return sqrt(pow(x-posObjetivo[0],2) + pow(y-posObjetivo[1],2));
+        
+        //Distancia Manhattan
+        //return abs(x-posObjetivo[0]) + abs(y-posObjetivo[1]);
     }
     
     public void moverAgente(Movimiento mov) {
@@ -189,7 +195,6 @@ public class Entorno {
                 break;
         }
         pasarPor(posAgente[0], posAgente[1]);
-        distancia_actual = calcularDistancia(posAgente[0], posAgente[1]);
         mostrarEntorno();
     }
     

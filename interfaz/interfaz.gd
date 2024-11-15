@@ -62,6 +62,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 func read_mapa():
+
 	var ruta_entrada = ruta_absoluta
 	var ruta_salida = "res://entorno.json"
 	
@@ -92,6 +93,7 @@ func read_mapa():
 
 
 func file_read():
+
 	var ruta_entrada = ruta_absoluta
 	var ruta_salida = "res://entorno.json"
 	

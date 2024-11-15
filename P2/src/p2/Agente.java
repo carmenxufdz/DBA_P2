@@ -12,18 +12,19 @@ public class Agente extends Agent implements AgenteInterface{
     private Entorno entorno;
     private int energia;
     private ArrayList<Movimiento> sensores;
-    private double mejor_distancia;
     private int fila_incial = 6;
     private int columna_inicial = 6;
-    private int fila_final = 6;
-    private int columna_final = 4;
-    
+    private int fila_final = 0;
+    private int columna_final = 5;
+    private double distancia_actual;
+
     
     private Comportamiento comportamiento;
     
     public Agente(){
         registerO2AInterface(AgenteInterface.class, this);
     }
+    
     @Override
     protected void setup() {
         energia = 0;
@@ -37,19 +38,20 @@ public class Agente extends Agent implements AgenteInterface{
         sensores.add(Movimiento.OESTE);
         sensores.add(Movimiento.NOROESTE);
         
-        mapa = new Mapa ("./maps/mapWithComplexObstacle3.txt");
+        mapa = new Mapa ("./maps/mapWithComplexObstacle2.txt");
         
         
         setEnabledO2ACommunication(true, 10);
     }
     
-    public void setMejorDistancia(double mejor){
-        mejor_distancia = mejor;
+    public void setDistanciaActual(){
+        distancia_actual = entorno.getDistanciaActual();
     }
     
-    public double getMejorDistancia(){
-        return mejor_distancia;
+    public double getDistanciaActual(){
+        return distancia_actual;
     }
+   
     
     @Override
     public void takeDown() {
@@ -62,6 +64,7 @@ public class Agente extends Agent implements AgenteInterface{
     
     public void mover() {
         energia++;
+        System.out.println("Energia consumida: " + energia);
     }
     
     @Override
@@ -84,7 +87,6 @@ public class Agente extends Agent implements AgenteInterface{
         entorno = new Entorno (mapa, fila_incial, columna_inicial, fila_final, columna_final);
         entorno.mostrarEntorno();
         
-        mejor_distancia = entorno.calcularDistancia(fila_incial, columna_inicial);
         comportamiento = new Comportamiento(entorno, this);
         addBehaviour(comportamiento);
     }

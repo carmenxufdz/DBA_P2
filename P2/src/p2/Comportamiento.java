@@ -33,6 +33,7 @@ public class Comportamiento extends Behaviour {
         if(move){
             agente.mover();
             entorno.moverAgente(optimo.getKey());
+            agente.setDistanciaActual();
             move = false;
         }
         /*
@@ -58,11 +59,14 @@ public class Comportamiento extends Behaviour {
         double valor = estado.getKey();
         double tam_mapa = Math.sqrt(entorno.getFilas()*entorno.getFilas() + entorno.getColumnas()*entorno.getColumnas());
         
-        if(valor >= 0){
+        if(valor > 0){
             int veces = estado.getValue();
             
-            if(entorno.distancia_actual > valor && valor >= 1){
+            // Solo puede valer 0 la meta. Si no estuviera esta condicional
+            // también valdrian 0 todos las casillas colindantes a ella.
+            if(agente.getDistanciaActual() > valor && valor > 1){
                 valor -= 1;
+                
             }
 
             valor += veces*tam_mapa;  
