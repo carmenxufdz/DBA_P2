@@ -10,7 +10,6 @@ public class Comportamiento extends Behaviour {
     private Entorno entorno;
     private Agente agente;
     private boolean move = false;
-    private boolean terminado = false;
  
     public Comportamiento(Entorno e, Agente a) {
         entorno = e;
@@ -49,7 +48,6 @@ public class Comportamiento extends Behaviour {
     public boolean done() {
         if (entorno.agenteEnMeta())
             agente.doDelete();
-            terminado = true;
         return entorno.agenteEnMeta();
     }
     
@@ -78,8 +76,4 @@ public class Comportamiento extends Behaviour {
         move = true;
     }
     
-    public boolean terminado(){
-        return terminado;
-    }
-
 }
