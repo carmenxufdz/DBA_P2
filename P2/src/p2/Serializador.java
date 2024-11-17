@@ -22,6 +22,7 @@ public class Serializador {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error al escribir el archivo JSON.");
-        }    }
+        }    
+    }
 }
 

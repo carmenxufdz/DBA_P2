@@ -39,6 +39,9 @@ public class Entorno {
         
     }
     
+    private void pasarPor(int f, int c) {
+        recorrido[f][c]++;
+    }    
     
     public void mostrarEntorno() {
         for (int fila=0; fila<mapa.getFilas() ; fila++) {
@@ -58,49 +61,49 @@ public class Entorno {
         System.out.print("\n");
     }
     
+    private int getVeces (int f, int c) {
+        return recorrido[f][c];
+    }
+    
     public boolean agenteEnMeta() {
         return posAgente[0] == posObjetivo[0] && posAgente[1] == posObjetivo[1];
     }
     
-    public double getDistanciaActual(){
-        return calcularDistancia(posAgente[0], posAgente[1]);
-    }
-    
     public Pair<Double, Integer> getEstado (Movimiento mov) {
         // Hay que inicializarlas para que permita hacer calcularDistancia al final
-        int fila= -1,columna= -1;
+        int fila = -1, columna = -1;
         // =-2 fuera del mapa, =-1 obstáculo, =0 libre
         double estado = -2;
         // En sentido de las agujas del reloj
         switch (mov) {
             case NORTE:
-               columna = posAgente[1]-1;
-                if (columna > -1) {
-                   fila = posAgente[0];
-                    estado = mapa.getPos(fila, columna);
+               fila = posAgente[0]-1;
+                if (fila > -1) {
+                   columna = posAgente[1];
+                   estado = mapa.getPos(fila, columna);
                 }
                 break;
             case NORESTE:
                 // Si no se puede norte ni este, no se puede noreste
                 if (getEstado(Movimiento.NORTE).getKey() >=0 || getEstado(Movimiento.ESTE).getKey() >=0) {
-                   columna = posAgente[1]-1;
-                   fila = posAgente[0]+1;
-                    if (columna > -1 && fila< mapa.getFilas()) {
+                   fila = posAgente[0]-1;
+                   columna = posAgente[1]+1;
+                    if (fila > -1 && columna < mapa.getColumnas()) {
                         estado = mapa.getPos(fila, columna);
                     }
                 }
                 break;
             case ESTE:
-               fila = posAgente[0]+1;
-                if (fila < mapa.getFilas()) {
-                   columna = posAgente[1];
+               columna = posAgente[1]+1;
+                if (columna < mapa.getColumnas()) {
+                   fila = posAgente[0];
                    estado = mapa.getPos(fila, columna);
                 }
                 break;
             case SURESTE:
                 // Si no se puede sur ni este, no se puede sureste
                 if (getEstado(Movimiento.SUR).getKey() >=0 || getEstado(Movimiento.ESTE).getKey() >=0) {
-                   fila= posAgente[0]+1;
+                   fila = posAgente[0]+1;
                    columna= posAgente[1]+1;
                     if (fila < mapa.getFilas() && columna < mapa.getColumnas()) {
                         estado = mapa.getPos(fila, columna);
@@ -111,23 +114,23 @@ public class Entorno {
                columna = posAgente[1]+1;
                 if (columna < mapa.getColumnas()) {
                    fila = posAgente[0];
-                    estado = mapa.getPos(fila, columna);
+                   estado = mapa.getPos(fila, columna);
                 }
                 break;
             case SUROESTE:
                 // Si no se puede sur ni oeste, no se puede suroeste
                 if (getEstado(Movimiento.SUR).getKey() >=0 || getEstado(Movimiento.OESTE).getKey() >=0) {
-                   columna = posAgente[1]+1;
-                   fila = posAgente[0]-1;
-                    if (columna < mapa.getColumnas() && fila> -1) {
+                   fila = posAgente[0]+1;
+                   columna = posAgente[1]-1;
+                    if (fila < mapa.getFilas() && columna > -1) {
                         estado = mapa.getPos(fila, columna);
                     }
                 }
                 break;
             case OESTE:
-               fila = posAgente[0]-1;
-                if (fila > -1) {
-                   columna = posAgente[1];
+               columna = posAgente[1]-1;
+                if (columna > -1) {
+                   fila = posAgente[0];
                    estado = mapa.getPos(fila, columna);
                 }
                 break;
@@ -154,7 +157,7 @@ public class Entorno {
         return new Pair<>(estado, veces);
     }
     
-    public double calcularDistancia (int x, int y) {
+    private double calcularDistancia (int x, int y) {
         // Distancia Euclidiana
         return sqrt(pow(x-posObjetivo[0],2) + pow(y-posObjetivo[1],2));
         
@@ -162,32 +165,36 @@ public class Entorno {
         //return abs(x-posObjetivo[0]) + abs(y-posObjetivo[1]);
     }
     
+    public double getDistanciaActual(){
+        return calcularDistancia(posAgente[0], posAgente[1]);
+    }
+    
     public void moverAgente(Movimiento mov) {
         // En sentido de las agujas del reloj
         switch (mov) {
             case NORTE:
-                posAgente[1]--;
+                posAgente[0]--;
                 break;
             case NORESTE:
-                posAgente[1]--;
-                posAgente[0]++;
+                posAgente[0]--;
+                posAgente[1]++;
                 break;
             case ESTE:
-                posAgente[0]++;
+                posAgente[1]++;
                 break;
             case SURESTE:
                 posAgente[0]++;
                 posAgente[1]++;
                 break;
             case SUR:
-                posAgente[1]++;
+                posAgente[0]++;
                 break;
             case SUROESTE:
-                posAgente[1]++;
-                posAgente[0]--;
+                posAgente[0]++;
+                posAgente[1]--;
                 break;
             case OESTE:
-                posAgente[0]--;
+                posAgente[1]--;
                 break;
             case NOROESTE:
                 posAgente[0]--;
@@ -195,15 +202,6 @@ public class Entorno {
                 break;
         }
         pasarPor(posAgente[0], posAgente[1]);
-        mostrarEntorno();
-    }
-    
-    private int getVeces (int f, int c) {
-        return recorrido[f][c];
-    }
-    
-    private void pasarPor(int f, int c) {
-        recorrido[f][c]++;
     }
     
     public int getFilas(){

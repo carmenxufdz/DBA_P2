@@ -8,16 +8,15 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class Agente extends Agent implements AgenteInterface{
-    private Entorno entorno;
     private int energia;
     private ArrayList<Movimiento> sensores;
+    private double distancia_actual;
     private int fila_incial = 6;
     private int columna_inicial = 6;
     private int fila_final = 5;
     private int columna_final = 2;
-    private double distancia_actual;
 
-    
+    private Entorno entorno;
     private Comportamiento comportamiento;
     
     public Agente(){
@@ -47,7 +46,6 @@ public class Agente extends Agent implements AgenteInterface{
     public double getDistanciaActual(){
         return distancia_actual;
     }
-   
     
     @Override
     public void takeDown() {
@@ -68,7 +66,6 @@ public class Agente extends Agent implements AgenteInterface{
         return entorno;
     }
 
- 
     // Implementación de la interfaz para iniciar el comportamiento
     @Override
     public void iniciarComportamiento() {
