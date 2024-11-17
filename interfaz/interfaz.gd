@@ -10,7 +10,7 @@ var mapa_path := ""
 @onready var vista := $vista
 @onready var energia_label := $vista/Energia
 
-const rutaa_absoluta = "C:/Users/carme/OneDrive/Documentos/Universidad/4GII/PRIMER_CUATRI/Desarrollo Basado en Agentes/Practicas/DBA_UGR/P2/json/entorno.json"
+const ruta_absoluta = "C:/Users/carme/OneDrive/Documentos/Universidad/4GII/PRIMER_CUATRI/Desarrollo Basado en Agentes/Practicas/DBA_UGR/P2/json/entorno.json"
 
 func _ready():
 	iniciar_conexion()
@@ -49,21 +49,9 @@ func _on_iniciar_pressed() -> void:
 	menu.hide()
 	read_mapa()
 	vista.show()
-	
-
-func _on_elegir_mapa_pressed() -> void:
-	send_message("CHOOSE_MAP")
-	fileDialog.popup()
-	
-
-func _on_file_dialog_file_selected(path: String) -> void:
-	var file_name = path.get_file()
-	print("Archivo seleccionado: ", file_name)
-	send_message(file_name)
-
 
 func read_mapa():
-	var ruta_entrada = rutaa_absoluta
+	var ruta_entrada = ruta_absoluta
 	var ruta_salida = "res://entorno.json"
 	
 	$Timer.start(5)
@@ -93,7 +81,7 @@ func read_mapa():
 
 
 func file_read():
-	var ruta_entrada = rutaa_absoluta
+	var ruta_entrada = ruta_absoluta
 	var ruta_salida = "res://entorno.json"
 	
 	$Timer.start(1)

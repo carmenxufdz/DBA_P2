@@ -89,21 +89,6 @@ public class P2interfaz {
                 return "Agente iniciado";
             case "STEP":
                 return next();
-            case "CHOOSE_MAP":
-                try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-
-                    System.out.println("Esperando la ruta...");
-
-                    String inputLine = in.readLine();
-                    System.out.println("Ruta recibida: '" + inputLine.trim() + "'");
-                    String response = cargarMapa(inputLine.trim());
-                    out.println(response);  // Enviar respuesta
-                        
-                } catch (IOException e) {
-                    System.out.println("Error al leer del cliente");
-                    e.printStackTrace();
-                }
             default:
                 return "Comando desconocido";
         }
@@ -124,22 +109,6 @@ public class P2interfaz {
             Logger.getLogger(P2interfaz.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-    }
-    
-    private static String cargarMapa(String path) {
-        try {
-            if (agenteController != null) {
-                // Llama al método para establecer el mapa en el agente
-                agenteController.getO2AInterface(AgenteInterface.class).cargarMapa(path);
-                return "Mapa cargado desde: " + path;
-            } else {
-                return "Agente no iniciado. Usa el comando 'INICIAR' primero.";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error al cargar el mapa.";
-        }
-
     }
     
     private static String next(){

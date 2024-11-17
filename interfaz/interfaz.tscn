@@ -1,8 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://cuqknnptx21d5"]
+[gd_scene load_steps=22 format=3 uid="uid://cuqknnptx21d5"]
 
 [ext_resource type="Script" path="res://interfaz.gd" id="1_m35fa"]
 [ext_resource type="Texture2D" uid="uid://bo77cc1mo17hf" path="res://assets/power.png" id="2_u3dmv"]
-[ext_resource type="Texture2D" uid="uid://bpwit8nltdeuc" path="res://assets/export.png" id="3_yhh86"]
 [ext_resource type="Script" path="res://vista.gd" id="5_7cpr1"]
 [ext_resource type="Texture2D" uid="uid://c8kay1y5d8hk2" path="res://assets/suelo1.png" id="5_mp3fl"]
 [ext_resource type="Texture2D" uid="uid://cwqrdf8h40q0e" path="res://assets/suelo2.png" id="6_rn82y"]
@@ -115,24 +114,6 @@ grow_vertical = 0
 text = "INICIAR"
 icon = ExtResource("2_u3dmv")
 
-[node name="ElegirMapa" type="MenuButton" parent="Menu"]
-layout_mode = 1
-offset_right = 166.0
-offset_bottom = 58.0
-text = "ELEGIR MAPA"
-icon = ExtResource("3_yhh86")
-
-[node name="FileDialog" type="FileDialog" parent="."]
-mode = 3
-title = "Open a File"
-initial_position = 2
-size = Vector2i(500, 500)
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-
 [node name="Timer" type="Timer" parent="."]
 
 [connection signal="pressed" from="Menu/Iniciar" to="." method="_on_iniciar_pressed"]
-[connection signal="pressed" from="Menu/ElegirMapa" to="." method="_on_elegir_mapa_pressed"]
-[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

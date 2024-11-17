@@ -9,7 +9,6 @@ package p2;
  * @author carme
  */
 public interface AgenteInterface {
-    public void cargarMapa(String ruta);
     public void iniciarComportamiento();
     public Entorno getEntorno();
     public void moverAgente();

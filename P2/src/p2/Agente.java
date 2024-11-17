@@ -8,14 +8,13 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class Agente extends Agent implements AgenteInterface{
-    private Mapa mapa;
     private Entorno entorno;
     private int energia;
     private ArrayList<Movimiento> sensores;
     private int fila_incial = 6;
     private int columna_inicial = 6;
-    private int fila_final = 0;
-    private int columna_final = 5;
+    private int fila_final = 5;
+    private int columna_final = 2;
     private double distancia_actual;
 
     
@@ -37,10 +36,7 @@ public class Agente extends Agent implements AgenteInterface{
         sensores.add(Movimiento.SUROESTE);
         sensores.add(Movimiento.OESTE);
         sensores.add(Movimiento.NOROESTE);
-        
-        mapa = new Mapa ("./maps/map20x20.txt");
-        
-        
+
         setEnabledO2ACommunication(true, 10);
     }
     
@@ -71,20 +67,13 @@ public class Agente extends Agent implements AgenteInterface{
     public Entorno getEntorno(){
         return entorno;
     }
-    
-
-    @Override
-    public void cargarMapa(String path) {
-        String new_path = "./maps/" + path;
-        mapa = new Mapa(new_path);
-    }
 
  
     // Implementación de la interfaz para iniciar el comportamiento
     @Override
     public void iniciarComportamiento() {
         
-        entorno = new Entorno (mapa, fila_incial, columna_inicial, fila_final, columna_final);
+        entorno = new Entorno (new Mapa ("./maps/map20x20.txt"), fila_incial, columna_inicial, fila_final, columna_final);
         entorno.mostrarEntorno();
         
         comportamiento = new Comportamiento(entorno, this);
