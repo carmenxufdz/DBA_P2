@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cuqknnptx21d5"]
+[gd_scene load_steps=23 format=3 uid="uid://cuqknnptx21d5"]
 
 [ext_resource type="Script" path="res://interfaz.gd" id="1_m35fa"]
 [ext_resource type="Texture2D" uid="uid://bo77cc1mo17hf" path="res://assets/power.png" id="2_u3dmv"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://bf63gp40gccks" path="res://assets/arbol2.png" id="8_6up3o"]
 [ext_resource type="Texture2D" uid="uid://cmpfo5g50iag7" path="res://assets/muro.png" id="8_t5t8t"]
 [ext_resource type="Texture2D" uid="uid://dcvm4nv0lepan" path="res://assets/seta.png" id="9_edmot"]
-[ext_resource type="PackedScene" uid="uid://c2t4jii1jh12c" path="res://meta.tscn" id="10_ehkqh"]
 [ext_resource type="Texture2D" uid="uid://cbypxt78hmmou" path="res://assets/tileMeta.png" id="10_ibqmx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cejbh"]
@@ -74,15 +73,11 @@ position = Vector2(0, -1)
 script = ExtResource("5_7cpr1")
 
 [node name="Mapa" type="TileMap" parent="vista"]
-scale = Vector2(4.5, 4.5)
 tile_set = SubResource("TileSet_te8oy")
 format = 2
 layer_0/name = "suelo"
 layer_1/name = "recorrido"
 layer_2/name = "meta"
-
-[node name="Meta" parent="vista" instance=ExtResource("10_ehkqh")]
-visible = false
 
 [node name="Agente" parent="vista" instance=ExtResource("7_6xt07")]
 visible = false

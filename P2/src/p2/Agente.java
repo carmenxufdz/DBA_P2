@@ -38,7 +38,7 @@ public class Agente extends Agent implements AgenteInterface{
         sensores.add(Movimiento.OESTE);
         sensores.add(Movimiento.NOROESTE);
         
-        mapa = new Mapa ("./maps/mapWithComplexObstacle2.txt");
+        mapa = new Mapa ("./maps/map20x20.txt");
         
         
         setEnabledO2ACommunication(true, 10);

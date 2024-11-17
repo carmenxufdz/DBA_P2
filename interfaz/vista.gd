@@ -97,20 +97,17 @@ class Entorno:
 
 @onready var tileMap = $Mapa
 @onready var agente := $Agente
-@onready var meta := $Meta
 
-var tile_size = 16*4.5
+var tile_size : float
 
 func _ready():
 	Signals.connect("file_read",Callable(self, "_actualizar"),CONNECT_DEFERRED)
 	Signals.connect("mapa_read",Callable(self, "_mapa_paint"),CONNECT_DEFERRED)
 	Signals.connect("entorno_updated",Callable(self, "_update"),CONNECT_DEFERRED)
 	agente.play()
-	meta.play()
 
 func _proccess(delta):
-	if finished():
-		Signals.emit_signal("finished")
+	pass
 
 func _mapa_paint() -> void:
 	var file = FileAccess.open("res://entorno.json", FileAccess.READ)
@@ -187,13 +184,9 @@ func pintar_entorno(entorno:Entorno)->void:
 
 	agente.position.y = entorno.get_pos_agente()[0] * tile_size + tile_size/2
 	agente.position.x = entorno.get_pos_agente()[1] * tile_size + tile_size/2
-	meta.position.y = entorno.get_pos_objetivo()[0] * tile_size + tile_size/2
-	meta.position.x = entorno.get_pos_objetivo()[1] * tile_size + tile_size/2
 	
 	if not agente.visible:
 		agente.show()
-	if not meta.visible:
-		meta.show()
 	tileMap.set_cell(2,Vector2i(entorno.get_pos_objetivo()[1],entorno.get_pos_objetivo()[0]),7,Vector2i(0,0),0)
 	for y in range(entorno.mapa.get_N()):
 		for x in range(entorno.mapa.get_M()):
@@ -214,6 +207,9 @@ func pintar_entorno(entorno:Entorno)->void:
 	Signals.emit_signal("entorno_updated")
 
 func pintar_mapa(mapa : Mapa) -> void:
+	tileMap.set_scale(Vector2(float(45)/mapa.get_N(),float(45)/mapa.get_N()))
+	tile_size = 16 * 45/mapa.get_N()
+	agente.set_scale(Vector2(float(10)/mapa.get_N(),float(10)/mapa.get_N()))
 	for y in range(mapa.get_N()):
 		for x in range(mapa.get_M()):
 			if mapa.matriz[y][x] == 0:
@@ -224,6 +220,3 @@ func pintar_mapa(mapa : Mapa) -> void:
 
 func _update() -> void:
 	Signals.emit_signal("file_updated")
-
-func finished() -> bool:
-	return agente.position == meta.position
