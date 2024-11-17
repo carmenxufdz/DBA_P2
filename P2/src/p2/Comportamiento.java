@@ -10,7 +10,6 @@ public class Comportamiento extends Behaviour {
     private Entorno entorno;
     private Agente agente;
     private boolean move = false;
-    private boolean terminado = false;
  
     public Comportamiento(Entorno e, Agente a) {
         entorno = e;
@@ -30,12 +29,13 @@ public class Comportamiento extends Behaviour {
             }
         }
         
-        if(move){
+        //if(move){
             agente.mover();
             entorno.moverAgente(optimo.getKey());
+            entorno.mostrarEntorno();
             agente.setDistanciaActual();
             move = false;
-        }
+        //}
         /*
         try {
             Thread.sleep(1000);
@@ -49,7 +49,6 @@ public class Comportamiento extends Behaviour {
     public boolean done() {
         if (entorno.agenteEnMeta())
             agente.doDelete();
-            terminado = true;
         return entorno.agenteEnMeta();
     }
     
@@ -62,11 +61,11 @@ public class Comportamiento extends Behaviour {
         if(valor > 0){
             int veces = estado.getValue();
             
-            // Solo puede valer 0 la meta. Si no estuviera esta condicional
-            // también valdrian 0 todos las casillas colindantes a ella.
+            // Solo puede valer 0 la meta. Si no se comprobase >1 antes de restar
+            // podrían darse valores negativos. No se contempla >= porque también
+            // podrían valer 0 las casillas colindantes a la meta, y el valor solo es 0 si es la meta.
             if(agente.getDistanciaActual() > valor && valor > 1){
                 valor -= 1;
-                
             }
 
             valor += veces*tam_mapa;  
@@ -76,10 +75,6 @@ public class Comportamiento extends Behaviour {
     
     public void moverAgente(){
         move = true;
-    }
-    
-    public boolean terminado(){
-        return terminado;
     }
 
 }
