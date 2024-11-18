@@ -56,7 +56,7 @@ public class Comportamiento extends Behaviour {
     private Pair<Movimiento,Double> valorarMovimiento (Movimiento direccion) {
         Pair<Double, Integer> estado = entorno.getEstado(direccion);
         double valor = estado.getKey();
-        double tam_mapa = Math.sqrt(entorno.getFilas()*entorno.getFilas() + entorno.getColumnas()*entorno.getColumnas());
+        //double tam_mapa = Math.sqrt(entorno.getFilas()*entorno.getFilas() + entorno.getColumnas()*entorno.getColumnas());
         
         if(valor > 0){
             int veces = estado.getValue();
@@ -64,11 +64,11 @@ public class Comportamiento extends Behaviour {
             // Solo puede valer 0 la meta. Si no se comprobase >1 antes de restar
             // podrían darse valores negativos. No se contempla >= porque también
             // podrían valer 0 las casillas colindantes a la meta, y el valor solo es 0 si es la meta.
-            if(agente.getDistanciaActual() > valor && valor > 1){
+            /*if(agente.getDistanciaActual() > valor && valor > 1){
                 valor -= 1;
-            }
+            }*/
 
-            valor += veces*tam_mapa;  
+            valor += veces*estado.getKey();  
         }
         return new Pair<> (direccion, valor);
     }
