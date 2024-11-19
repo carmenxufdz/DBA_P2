@@ -4,10 +4,6 @@
  */
 package p2;
 
-/**
- *
- * @author carme
- */
 public interface AgenteInterface {
     public void iniciarComportamiento();
     public Entorno getEntorno();

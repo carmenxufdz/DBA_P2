@@ -11,10 +11,10 @@ public class Agente extends Agent implements AgenteInterface{
     private int energia;
     private ArrayList<Movimiento> sensores;
     private double distancia_actual;
-    private int fila_incial = 6;
-    private int columna_inicial = 6;
-    private int fila_final = 5;
-    private int columna_final = 2;
+    private int fila_incial = 9;
+    private int columna_inicial = 9;
+    private int fila_final = 0;
+    private int columna_final = 0;
 
     private Entorno entorno;
     private Comportamiento comportamiento;
@@ -70,7 +70,7 @@ public class Agente extends Agent implements AgenteInterface{
     @Override
     public void iniciarComportamiento() {
         
-        entorno = new Entorno (new Mapa ("./maps/mapWithComplexObstacle1.txt"), fila_incial, columna_inicial, fila_final, columna_final);
+        entorno = new Entorno (new Mapa ("./maps/mapWithComplexObstacle2.txt"), fila_incial, columna_inicial, fila_final, columna_final);
         entorno.mostrarEntorno();
         
         comportamiento = new Comportamiento(entorno, this);

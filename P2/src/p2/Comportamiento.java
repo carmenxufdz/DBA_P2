@@ -10,7 +10,6 @@ public class Comportamiento extends Behaviour {
     private Entorno entorno;
     private Agente agente;
     private boolean move = false;
-    private double penalizacion = 10;
  
     public Comportamiento(Entorno e, Agente a) {
         entorno = e;
@@ -20,6 +19,7 @@ public class Comportamiento extends Behaviour {
     @Override
     public void action() {
         ArrayList<Movimiento> movimientos = agente.getMovs();
+        
         Pair<Movimiento, Double> movimiento;
         Pair<Movimiento, Double> optimo = valorarMovimiento(movimientos.get(0));
         for (int i=1; i<movimientos.size() && optimo.getValue()!=0; i++) {
@@ -42,7 +42,7 @@ public class Comportamiento extends Behaviour {
         } catch (InterruptedException ex) {
             Logger.getLogger(Comportamiento.class.getName()).log(Level.SEVERE, null, ex);
         }
-*/
+    */
     }
 
     @Override
@@ -58,13 +58,7 @@ public class Comportamiento extends Behaviour {
         double valor = estado.getKey();
         
         if(valor > 0){
-            int veces = estado.getValue();
-            
-            if(agente.getDistanciaActual() > valor && valor > penalizacion){
-                valor -= penalizacion;
-            }
-
-            valor += veces*penalizacion*Math.log(estado.getKey());              
+            valor += estado.getValue()*estado.getKey(); // veces * distancia     
         }
         return new Pair<> (direccion, valor);
     }
