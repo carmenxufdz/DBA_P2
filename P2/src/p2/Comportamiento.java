@@ -20,13 +20,10 @@ public class Comportamiento extends Behaviour {
     @Override
     public void action() {
         ArrayList<Movimiento> movimientos = agente.getMovs();
-
         Pair<Movimiento, Double> movimiento;
         Pair<Movimiento, Double> optimo = valorarMovimiento(movimientos.get(0));
-        System.out.println("Movimiento optimo: " + optimo.getKey() + "Coste: " + optimo.getValue());
         for (int i=1; i<movimientos.size() && optimo.getValue()!=0; i++) {
             movimiento = valorarMovimiento(movimientos.get(i));
-            System.out.println("Movimiento: " + movimiento.getKey() + "Coste: " + movimiento.getValue());
             if (optimo.getValue()<0 || (movimiento.getValue()>=0 && movimiento.getValue()<optimo.getValue())){
                 optimo = movimiento;
             }
@@ -59,24 +56,15 @@ public class Comportamiento extends Behaviour {
     private Pair<Movimiento,Double> valorarMovimiento (Movimiento direccion) {
         Pair<Double, Integer> estado = entorno.getEstado(direccion);
         double valor = estado.getKey();
-        //double tam_mapa = Math.sqrt(entorno.getFilas()*entorno.getFilas() + entorno.getColumnas()*entorno.getColumnas());
         
         if(valor > 0){
             int veces = estado.getValue();
             
-            System.out.println("Movimiento valorandose: " + direccion + "Coste: " + estado.getKey());
-
-            if(estado.getKey() != 0){
-                // Solo puede valer 0 la meta. Si no se comprobase >1 antes de restar
-                // podrían darse valores negativos. No se contempla >= porque también
-                // podrían valer 0 las casillas colindantes a la meta, y el valor solo es 0 si es la meta.
-                if(agente.getDistanciaActual() > valor && valor > penalizacion){
-                    valor -= penalizacion;
-                }
-
-                valor += veces*penalizacion*Math.log(estado.getKey());  
+            if(agente.getDistanciaActual() > valor && valor > penalizacion){
+                valor -= penalizacion;
             }
-            
+
+            valor += veces*penalizacion*Math.log(estado.getKey());              
         }
         return new Pair<> (direccion, valor);
     }
