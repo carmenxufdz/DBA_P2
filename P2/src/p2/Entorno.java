@@ -111,9 +111,9 @@ public class Entorno {
                 }
                 break;
             case SUR:
-               columna = posAgente[1]+1;
-                if (columna < mapa.getColumnas()) {
-                   fila = posAgente[0];
+               fila = posAgente[0]+1;
+                if (fila < mapa.getFilas()) {
+                   columna = posAgente[1];
                    estado = mapa.getPos(fila, columna);
                 }
                 break;
@@ -150,7 +150,7 @@ public class Entorno {
         // Celda libre
         if (estado == 0) {
             // Se le añade el coste de la distancia
-            estado += calcularDistancia(fila, columna);     
+            estado = calcularDistancia(fila, columna);     
             veces += getVeces(fila, columna);
         }
         

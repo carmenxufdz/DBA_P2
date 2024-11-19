@@ -70,7 +70,7 @@ public class Agente extends Agent implements AgenteInterface{
     @Override
     public void iniciarComportamiento() {
         
-        entorno = new Entorno (new Mapa ("./maps/map20x20.txt"), fila_incial, columna_inicial, fila_final, columna_final);
+        entorno = new Entorno (new Mapa ("./maps/mapWithComplexObstacle1.txt"), fila_incial, columna_inicial, fila_final, columna_final);
         entorno.mostrarEntorno();
         
         comportamiento = new Comportamiento(entorno, this);

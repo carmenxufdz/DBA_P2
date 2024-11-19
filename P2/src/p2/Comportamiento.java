@@ -10,6 +10,7 @@ public class Comportamiento extends Behaviour {
     private Entorno entorno;
     private Agente agente;
     private boolean move = false;
+    private double penalizacion = 10;
  
     public Comportamiento(Entorno e, Agente a) {
         entorno = e;
@@ -22,8 +23,10 @@ public class Comportamiento extends Behaviour {
 
         Pair<Movimiento, Double> movimiento;
         Pair<Movimiento, Double> optimo = valorarMovimiento(movimientos.get(0));
-        for (int i=1; i<movimientos.size() && optimo.getValue()!=0 ; i++) {
+        System.out.println("Movimiento optimo: " + optimo.getKey() + "Coste: " + optimo.getValue());
+        for (int i=1; i<movimientos.size() && optimo.getValue()!=0; i++) {
             movimiento = valorarMovimiento(movimientos.get(i));
+            System.out.println("Movimiento: " + movimiento.getKey() + "Coste: " + movimiento.getValue());
             if (optimo.getValue()<0 || (movimiento.getValue()>=0 && movimiento.getValue()<optimo.getValue())){
                 optimo = movimiento;
             }
@@ -61,14 +64,19 @@ public class Comportamiento extends Behaviour {
         if(valor > 0){
             int veces = estado.getValue();
             
-            // Solo puede valer 0 la meta. Si no se comprobase >1 antes de restar
-            // podrían darse valores negativos. No se contempla >= porque también
-            // podrían valer 0 las casillas colindantes a la meta, y el valor solo es 0 si es la meta.
-            /*if(agente.getDistanciaActual() > valor && valor > 1){
-                valor -= 1;
-            }*/
+            System.out.println("Movimiento valorandose: " + direccion + "Coste: " + estado.getKey());
 
-            valor += veces*estado.getKey();  
+            if(estado.getKey() != 0){
+                // Solo puede valer 0 la meta. Si no se comprobase >1 antes de restar
+                // podrían darse valores negativos. No se contempla >= porque también
+                // podrían valer 0 las casillas colindantes a la meta, y el valor solo es 0 si es la meta.
+                if(agente.getDistanciaActual() > valor && valor > penalizacion){
+                    valor -= penalizacion;
+                }
+
+                valor += veces*penalizacion*Math.log(estado.getKey());  
+            }
+            
         }
         return new Pair<> (direccion, valor);
     }
