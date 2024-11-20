@@ -4,16 +4,11 @@
  */
 package p2;
 
-/**
- *
- * @author carme
- */
 public interface AgenteInterface {
-    public void cargarMapa(String ruta);
     public void iniciarComportamiento();
     public Entorno getEntorno();
     public void setEntorno(Entorno entorno);
     public void moverAgente();
-    public int Energia();
+    public String Energia();
 }
 

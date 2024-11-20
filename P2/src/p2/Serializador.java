@@ -21,10 +21,9 @@ public class Serializador {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error al escribir el archivo JSON.");
-<<<<<<< Updated upstream
-        }    }
-=======
-        }    
+
+        } 
+  
     }
     
     public static Entorno deserializarEntorno(String rutaArchivo) {
@@ -42,6 +41,5 @@ public class Serializador {
 
         return entorno;
     }
->>>>>>> Stashed changes
 }
 

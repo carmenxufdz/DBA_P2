@@ -8,25 +8,16 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class Agente extends Agent implements AgenteInterface{
-    private Mapa mapa;
-    private Entorno entorno;
     private int energia;
     private ArrayList<Movimiento> sensores;
-<<<<<<< Updated upstream
+  
     private int fila_incial = 6;
     private int columna_inicial = 6;
     private int fila_final = 0;
     private int columna_final = 5;
     private double distancia_actual;
-=======
-    private double distancia_actual;
-    private int fila_incial = 3;
-    private int columna_inicial = 0;
-    private int fila_final = 5;
-    private int columna_final = 5;
->>>>>>> Stashed changes
 
-    
+    private Entorno entorno;
     private Comportamiento comportamiento;
     
     public Agente(){
@@ -45,14 +36,11 @@ public class Agente extends Agent implements AgenteInterface{
         sensores.add(Movimiento.SUROESTE);
         sensores.add(Movimiento.OESTE);
         sensores.add(Movimiento.NOROESTE);
-<<<<<<< Updated upstream
         
         mapa = new Mapa ("./maps/mapWithComplexObstacle2.txt");
         
-        
-=======
         entorno = new Entorno (new Mapa ("./maps/mapWithComplexObstacle2.txt"), fila_incial, columna_inicial, fila_final, columna_final);
->>>>>>> Stashed changes
+
         setEnabledO2ACommunication(true, 10);
     }
     
@@ -63,7 +51,6 @@ public class Agente extends Agent implements AgenteInterface{
     public double getDistanciaActual(){
         return distancia_actual;
     }
-   
     
     @Override
     public void takeDown() {
@@ -83,24 +70,11 @@ public class Agente extends Agent implements AgenteInterface{
     public Entorno getEntorno(){
         return entorno;
     }
-    
 
-    @Override
-    public void cargarMapa(String path) {
-        String new_path = "./maps/" + path;
-        mapa = new Mapa(new_path);
-    }
-
- 
     // Implementación de la interfaz para iniciar el comportamiento
     @Override
     public void iniciarComportamiento() {
-<<<<<<< Updated upstream
-        
-        entorno = new Entorno (mapa, fila_incial, columna_inicial, fila_final, columna_final);
-=======
-        energia = 0;
->>>>>>> Stashed changes
+
         entorno.mostrarEntorno();
         
         comportamiento = new Comportamiento(entorno, this);
@@ -113,8 +87,8 @@ public class Agente extends Agent implements AgenteInterface{
     }
 
     @Override
-    public int Energia() {
-        return this.energia;
+    public String Energia() {
+        return "Energia:" + this.energia;
     }
 
     @Override

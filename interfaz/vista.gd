@@ -1,124 +1,14 @@
 extends Node
 
-<<<<<<< Updated upstream
-class Mapa:
-	var ruta: String
-	var N : int
-	var M : int
-	var matriz : Array
-
-	# Constructor para inicializar el mapa
-	@warning_ignore("shadowed_variable")
-	func _init(ruta: String, N: int, M: int, matriz: Array):
-		self.ruta = "res://mapas/" + ruta.get_file()
-		self.N = N
-		self.M = M
-		self.matriz = matriz
-
-	# Método para mostrar la matriz (opcional)
-	func mostrar_matriz() -> void:
-		for fila in matriz:
-			print(fila)
-	
-	# Getter para 'ruta'
-	func get_ruta() -> String:
-		return ruta
-
-	# Setter para 'ruta'
-	func set_ruta(value: String) -> void:
-		ruta = value
-
-	# Getter para 'N'
-	func get_N() -> int:
-		return N
-
-	# Setter para 'N'
-	func set_N(value: int) -> void:
-		N = value
-
-	# Getter para 'M'
-	func get_M() -> int:
-		return M
-
-	# Setter para 'M'
-	func set_M(value: int) -> void:
-		M = value
-
-	# Getter para 'matriz'
-	func get_matriz() -> Array:
-		return matriz
-
-	# Setter para 'matriz'
-	func set_matriz(value: Array) -> void:
-		matriz = value
-
-class Entorno:
-	var mapa : Mapa
-	var posAgente : Array
-	var posObjetivo : Array
-	var distancia_actual : float
-	var recorrido : Array
-
-	func _init(mapa, posAgente, posObjetivo, distancia_actual, recorrido):
-		self.mapa = mapa
-		self.posAgente = posAgente
-		self.posObjetivo = posObjetivo
-		self.distancia_actual = distancia_actual
-		self.recorrido = recorrido
-	
-	# Getter para 'mapa'
-	func get_mapa() -> Mapa:
-		return mapa
-
-	# Setter para 'mapa'
-	func set_mapa(value: Mapa) -> void:
-		mapa = value
-
-	# Getter para 'posAgente'
-	func get_pos_agente() -> Array:
-		return posAgente
-
-	# Setter para 'posAgente'
-	func set_pos_agente(value: Array) -> void:
-		posAgente = value
-
-	# Getter para 'posObjetivo'
-	func get_pos_objetivo() -> Array:
-		return posObjetivo
-
-	# Setter para 'posObjetivo'
-	func set_pos_objetivo(value: Array) -> void:
-		posObjetivo = value
-
-	# Getter para 'distancia_actual'
-	func get_distancia_actual() -> float:
-		return distancia_actual
-
-	# Setter para 'distancia_actual'
-	func set_distancia_actual(value: float) -> void:
-		distancia_actual = value
-
-	# Getter para 'recorrido'
-	func get_recorrido() -> Array:
-		return recorrido
-
-	# Setter para 'recorrido'
-	func set_recorrido(value: Array) -> void:
-		recorrido = value
-
-=======
 @onready var gif := $Ole
->>>>>>> Stashed changes
+
 @onready var tileMap = $Mapa
 @onready var agente := $Agente
-@onready var meta := $Meta
 
-<<<<<<< Updated upstream
-var tile_size = 16*4.5
-=======
+
 var tile_size : float
 var terminado : bool = false
->>>>>>> Stashed changes
+
 
 func _ready():
 	Signals.connect("file_read",Callable(self, "_actualizar"),CONNECT_DEFERRED)
@@ -126,15 +16,9 @@ func _ready():
 	Signals.connect("entorno_updated",Callable(self, "_update"),CONNECT_DEFERRED)
 	Signals.connect("finished",Callable(self, "_finished"),CONNECT_DEFERRED)
 	agente.play()
-<<<<<<< Updated upstream
-	meta.play()
-=======
-	
->>>>>>> Stashed changes
 
 func _proccess(delta):
-	if finished():
-		Signals.emit_signal("finished")
+	pass
 
 func _mapa_paint() -> void:
 	var file = FileAccess.open("res://entorno.json", FileAccess.READ)
@@ -184,11 +68,10 @@ func save_mapa(data) -> Mapa:
 	return mapa
 	
 func save_entorno(data, mapa: Mapa) -> Entorno:
-	var entorno = Entorno.new(mapa, data["posAgente"], data["posObjetivo"], data["distancia_actual"], data["recorrido"])
+	var entorno = Entorno.new(mapa, data["posAgente"], data["posObjetivo"], data["recorrido"])
 	print("Mapa: ", entorno.mapa)
 	print("Posición Agente: ", entorno.posAgente)
 	print("Posición Objetivo: ", entorno.posObjetivo)
-	print("Distancia Actual: ", entorno.distancia_actual)
 	print("Recorrido: ", entorno.recorrido)
 	return entorno
 
@@ -211,15 +94,12 @@ func leer_mapa_desde_txt(ruta:String) -> Mapa:
 	return Mapa.new(ruta, N, M, matriz)
 
 func pintar_entorno(entorno:Entorno)->void:
+
 	agente.position.y = entorno.get_pos_agente()[0] * tile_size + tile_size/2
 	agente.position.x = entorno.get_pos_agente()[1] * tile_size + tile_size/2
-	meta.position.y = entorno.get_pos_objetivo()[0] * tile_size + tile_size/2
-	meta.position.x = entorno.get_pos_objetivo()[1] * tile_size + tile_size/2
 	
 	if not agente.visible:
 		agente.show()
-	if not meta.visible:
-		meta.show()
 	tileMap.set_cell(2,Vector2i(entorno.get_pos_objetivo()[1],entorno.get_pos_objetivo()[0]),7,Vector2i(0,0),0)
 	for y in range(entorno.mapa.get_N()):
 		for x in range(entorno.mapa.get_M()):
@@ -242,6 +122,9 @@ func pintar_entorno(entorno:Entorno)->void:
 		Signals.emit_signal("finished")
 
 func pintar_mapa(mapa : Mapa) -> void:
+	tileMap.set_scale(Vector2(float(45)/mapa.get_N(),float(45)/mapa.get_N()))
+	tile_size = 16 * 45/mapa.get_N()
+	agente.set_scale(Vector2(float(10)/mapa.get_N(),float(10)/mapa.get_N()))
 	for y in range(mapa.get_N()):
 		for x in range(mapa.get_M()):
 			if mapa.matriz[y][x] == 0:
@@ -252,11 +135,6 @@ func pintar_mapa(mapa : Mapa) -> void:
 
 func _update() -> void:
 	Signals.emit_signal("file_updated")
-<<<<<<< Updated upstream
-
-func finished() -> bool:
-	return agente.position == meta.position
-=======
 	
 func is_finished(entorno : Entorno) -> void:
 	if entorno.get_pos_agente() == entorno.get_pos_objetivo():
@@ -269,4 +147,3 @@ func _finished() -> void:
 	$"../Yay".play()
 	$Quit.show()
 	
->>>>>>> Stashed changes

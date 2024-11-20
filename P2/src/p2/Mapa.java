@@ -57,10 +57,6 @@ public class Mapa {
         return M;
     }
     
-    public int[][] getMatriz() {
-        return matriz;
-    }
-    
     public int getPos (int fila, int columna) {
         return matriz[fila][columna];
     }

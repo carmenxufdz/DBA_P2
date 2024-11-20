@@ -89,23 +89,6 @@ public class P2interfaz {
                 return "Agente iniciado";
             case "STEP":
                 return next();
-<<<<<<< Updated upstream
-            case "CHOOSE_MAP":
-                try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-
-                    System.out.println("Esperando la ruta...");
-
-                    String inputLine = in.readLine();
-                    System.out.println("Ruta recibida: '" + inputLine.trim() + "'");
-                    String response = cargarMapa(inputLine.trim());
-                    out.println(response);  // Enviar respuesta
-                        
-                } catch (IOException e) {
-                    System.out.println("Error al leer del cliente");
-                    e.printStackTrace();
-                }
-=======
             case "OPTION":
                 option();
                 return "options";
@@ -115,7 +98,6 @@ public class P2interfaz {
             case "EXIT":
                 // crearAgente();
                 return "Terminado";
->>>>>>> Stashed changes
             default:
                 return "Comando desconocido";
         }
@@ -138,30 +120,14 @@ public class P2interfaz {
             
     }
     
-    private static String cargarMapa(String path) {
-        try {
-            if (agenteController != null) {
-                // Llama al método para establecer el mapa en el agente
-                agenteController.getO2AInterface(AgenteInterface.class).cargarMapa(path);
-                return "Mapa cargado desde: " + path;
-            } else {
-                return "Agente no iniciado. Usa el comando 'INICIAR' primero.";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error al cargar el mapa.";
-        }
-
-    }
-    
     private static String next(){
         try {
             if (agenteController != null) {
                 // Llama al método para establecer el mapa en el agente
                 agenteController.getO2AInterface(AgenteInterface.class).moverAgente();
                 getEntorno();
-                int energia = agenteController.getO2AInterface(AgenteInterface.class).Energia();
-                return String.valueOf(energia);
+                String energia = (agenteController.getO2AInterface(AgenteInterface.class).Energia());
+                return energia;
             } else {
                 return "Agente no iniciado. Usa el comando 'INICIAR' primero.";
             }
