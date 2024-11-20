@@ -13,8 +13,8 @@ public class Agente extends Agent implements AgenteInterface{
   
     private int fila_incial = 6;
     private int columna_inicial = 6;
-    private int fila_final = 0;
-    private int columna_final = 5;
+    private int fila_final = 6;
+    private int columna_final = 3;
     private double distancia_actual;
 
     private Entorno entorno;
@@ -37,7 +37,7 @@ public class Agente extends Agent implements AgenteInterface{
         sensores.add(Movimiento.OESTE);
         sensores.add(Movimiento.NOROESTE);
         
-        entorno = new Entorno (new Mapa ("./maps/mapWithComplexObstacle2.txt"), fila_incial, columna_inicial, fila_final, columna_final);
+        entorno = new Entorno (new Mapa ("./maps/mapWithVerticalWall.txt"), fila_incial, columna_inicial, fila_final, columna_final);
 
         setEnabledO2ACommunication(true, 10);
     }
