@@ -29,13 +29,13 @@ public class Comportamiento extends Behaviour {
             }
         }
         
-        //if(move){
+        if(move){
             agente.mover();
             entorno.moverAgente(optimo.getKey());
             entorno.mostrarEntorno();
             agente.setDistanciaActual();
             move = false;
-        //}
+        }
         /*
         try {
             Thread.sleep(1000);

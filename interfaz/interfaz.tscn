@@ -1,5 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cuqknnptx21d5"]
-
+[gd_scene load_steps=34 format=3 uid="uid://cuqknnptx21d5"]
 
 [ext_resource type="Script" path="res://interfaz.gd" id="1_m35fa"]
 [ext_resource type="Texture2D" uid="uid://bo77cc1mo17hf" path="res://assets/power.png" id="2_u3dmv"]
@@ -101,7 +100,6 @@ script = ExtResource("1_m35fa")
 [node name="vista" type="Node2D" parent="."]
 visible = false
 position = Vector2(0, -1)
-
 script = ExtResource("5_7cpr1")
 
 [node name="Mapa" type="TileMap" parent="vista"]
@@ -172,29 +170,6 @@ layout_mode = 2
 text = "INICIAR"
 icon = ExtResource("2_u3dmv")
 
-
-[node name="ElegirMapa" type="MenuButton" parent="Menu"]
-layout_mode = 1
-offset_right = 166.0
-offset_bottom = 58.0
-text = "ELEGIR MAPA"
-icon = ExtResource("3_yhh86")
-
-[node name="FileDialog" type="FileDialog" parent="."]
-mode = 3
-title = "Open a File"
-initial_position = 2
-size = Vector2i(500, 500)
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-
-[node name="Timer" type="Timer" parent="."]
-
-[connection signal="pressed" from="Menu/Iniciar" to="." method="_on_iniciar_pressed"]
-[connection signal="pressed" from="Menu/ElegirMapa" to="." method="_on_elegir_mapa_pressed"]
-[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
-
 [node name="Options" type="MenuButton" parent="Menu/VBoxContainer"]
 layout_mode = 2
 text = "OPCIONES"
@@ -204,8 +179,6 @@ icon = ExtResource("13_ol3d2")
 layout_mode = 2
 text = "EXIT"
 icon = ExtResource("19_lwf85")
-
-[node name="Timer" type="Timer" parent="."]
 
 [node name="opciones" type="Control" parent="."]
 visible = false
@@ -286,8 +259,7 @@ text = "MAPA"
 
 [node name="actualizar" type="Button" parent="opciones/HBoxContainer"]
 layout_mode = 2
-text = "ACTUALIZAR
-"
+text = "ACTUALIZAR"
 
 [node name="atras" type="Button" parent="opciones/HBoxContainer"]
 layout_mode = 2
@@ -307,6 +279,8 @@ stream = ExtResource("21_5ydyv")
 [node name="Yay" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_qyt5s")
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="pressed" from="vista/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Menu/VBoxContainer/Iniciar" to="." method="_on_iniciar_pressed"]
 [connection signal="pressed" from="Menu/VBoxContainer/Options" to="." method="_on_options_pressed"]
@@ -315,7 +289,3 @@ stream = ExtResource("22_qyt5s")
 [connection signal="pressed" from="opciones/HBoxContainer/actualizar" to="opciones" method="_on_actualizar_pressed"]
 [connection signal="pressed" from="opciones/HBoxContainer/atras" to="opciones" method="_on_atras_pressed"]
 [connection signal="file_selected" from="opciones/FileDialog" to="opciones" method="_on_file_dialog_file_selected"]
-
-[node name="Timer" type="Timer" parent="."]
-
-[connection signal="pressed" from="Menu/Iniciar" to="." method="_on_iniciar_pressed"]
