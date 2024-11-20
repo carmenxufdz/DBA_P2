@@ -89,6 +89,15 @@ public class P2interfaz {
                 return "Agente iniciado";
             case "STEP":
                 return next();
+            case "OPTION":
+                option();
+                return "options";
+            case "CHANGE":
+                setEntorno();
+                return "entorno actualizado";
+            case "EXIT":
+                // crearAgente();
+                return "Terminado";
             default:
                 return "Comando desconocido";
         }
@@ -96,7 +105,7 @@ public class P2interfaz {
 
     private static void iniciarAgente() throws InterruptedException {
         try {
-        // Intentar obtener la interfaz O2A
+            // Intentar obtener la interfaz O2A
             AgenteInterface agenteInterface = (AgenteInterface) agenteController.getO2AInterface(AgenteInterface.class);
 
             if (agenteInterface != null) {
@@ -128,6 +137,30 @@ public class P2interfaz {
         }
     }
     
+    private static void option(){
+                try {
+            if (agenteController != null) {
+                // Llama al método para establecer el mapa en el agente
+                getEntorno();
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static void setEntorno(){
+        try {
+            if (agenteController != null) {
+                // Llama al método para establecer el mapa en el agente
+                entorno = Serializador.deserializarEntorno("./json/entorno.json");
+                agenteController.getO2AInterface(AgenteInterface.class).setEntorno(entorno);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     private static void getEntorno(){
         try {
             if (agenteController != null) {
@@ -139,4 +172,35 @@ public class P2interfaz {
             e.printStackTrace();
         }
     }
+    
+    private static void crearAgente(){
+        try {
+            // Si el agente está detenido o no existe, se crea uno nuevo
+            if (agenteController != null) {
+                try {
+                    // Intentamos acceder a la interfaz del agente. Si falla, el agente está detenido.
+                    agenteController.getO2AInterface(AgenteInterface.class);
+                    System.out.println("El agente está activo.");
+                } catch (StaleProxyException e) {
+                    // Si no se puede acceder a la interfaz, significa que el agente está detenido
+                    System.out.println("El agente está detenido. Creando un nuevo agente.");
+                    // Detenemos el agente si está en un estado inconsistente
+                    agenteController.kill();
+                }
+            }
+
+            // Crear un nuevo agente
+            jade.core.Runtime rt = jade.core.Runtime.instance();
+            Profile p = new ProfileImpl();
+            p.setParameter(Profile.MAIN_HOST, "localhost");
+            p.setParameter(Profile.CONTAINER_NAME, "lorena");
+
+            ContainerController cc = rt.createAgentContainer(p);
+            agenteController = cc.createNewAgent("Agente", "p2.Agente", null);
+            agenteController.start();
+        }catch (StaleProxyException ex) {
+            Logger.getLogger(P2interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

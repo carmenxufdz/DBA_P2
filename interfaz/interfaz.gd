@@ -9,6 +9,8 @@ var mapa_path := ""
 @onready var fileDialog := $FileDialog
 @onready var vista := $vista
 @onready var energia_label := $vista/Energia
+@onready var opciones := $opciones
+
 
 const ruta_absoluta = "C:/Users/carme/OneDrive/Documentos/Universidad/4GII/PRIMER_CUATRI/Desarrollo Basado en Agentes/Practicas/DBA_UGR/P2/json/entorno.json"
 
@@ -16,6 +18,7 @@ func _ready():
 	iniciar_conexion()
 	Signals.connect("file_updated",Callable(self,"_file_updated"), CONNECT_DEFERRED)
 	Signals.connect("finished",Callable(self,"_finished"), CONNECT_DEFERRED)
+	Signals.connect("variables_cambiadas", Callable(self,"_actualizar_entorno"), CONNECT_DEFERRED)
 
 func iniciar_conexion():
 	var err = client.connect_to_host(host, port)
@@ -49,6 +52,7 @@ func _on_iniciar_pressed() -> void:
 	menu.hide()
 	read_mapa()
 	vista.show()
+	$Music.play()
 
 func read_mapa():
 	var ruta_entrada = ruta_absoluta
@@ -109,6 +113,35 @@ func file_read():
 	
 	Signals.emit_signal("file_read")
 
+func file_opciones():
+	var ruta_entrada = ruta_absoluta
+	var ruta_salida = "res://entorno.json"
+	
+	$Timer.start(1)
+	await $Timer.timeout # Espera 1 segundo antes de comprobar de nuevo
+		
+	var file = FileAccess.open(ruta_entrada, FileAccess.READ)
+	var data
+	
+	if file:
+		data = file.get_as_text()  # Guarda los datos en el archivo
+		file.close()  # Cierra el archivo después de escribir
+		print("Archivo guardado o sobrescrito correctamente.")
+	else:
+		print("Error al abrir el archivo.")
+
+
+	file = FileAccess.open(ruta_salida, FileAccess.WRITE)
+	
+	if file:
+		file.store_string(data)  # Guarda los datos en el archivo
+		file.close()  # Cierra el archivo después de escribir
+		print("Archivo guardado o sobrescrito correctamente.")
+	else:
+		print("Error al abrir el archivo.")
+	
+	Signals.emit_signal("mapa_inicial")
+
 func _file_updated() -> void:
 	send_message("STEP")
 	file_read()
@@ -121,3 +154,41 @@ func _finished() -> void:
 	
 func actualizar_energia(energia) -> void:
 	energia_label.text = "Energía: %d" % energia
+
+
+func _on_options_pressed() -> void:
+	send_message("OPTION")
+	await receive_response()
+	menu.hide()
+	file_opciones()
+	opciones.show()
+	
+func _actualizar_entorno() -> void:
+	var source = "res://new_entorno.json"
+	var source_file = FileAccess.open(source, FileAccess.READ)
+	
+	if not source_file:
+		print("No se pudo abrir el archivo de origen")
+		return
+	
+	var destination_file = FileAccess.open(ruta_absoluta, FileAccess.WRITE)
+	
+	if not destination_file:
+		print("No se pudo abrir el archivo de destino")
+		source_file.close()
+		return
+	
+	# Copiar el contenido del archivo de origen al de destino
+	destination_file.store_string(source_file.get_as_text())
+	
+	# Cerrar los archivos
+	source_file.close()
+	destination_file.close()
+
+	print("Archivo copiado con éxito")
+	
+	send_message("CHANGE")
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

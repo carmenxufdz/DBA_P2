@@ -1,109 +1,20 @@
 extends Node
 
-class Mapa:
-	var ruta: String
-	var N : int
-	var M : int
-	var matriz : Array
-
-	# Constructor para inicializar el mapa
-	@warning_ignore("shadowed_variable")
-	func _init(ruta: String, N: int, M: int, matriz: Array):
-		self.ruta = "res://mapas/" + ruta.get_file()
-		self.N = N
-		self.M = M
-		self.matriz = matriz
-
-	# Método para mostrar la matriz (opcional)
-	func mostrar_matriz() -> void:
-		for fila in matriz:
-			print(fila)
-	
-	# Getter para 'ruta'
-	func get_ruta() -> String:
-		return ruta
-
-	# Setter para 'ruta'
-	func set_ruta(value: String) -> void:
-		ruta = value
-
-	# Getter para 'N'
-	func get_N() -> int:
-		return N
-
-	# Setter para 'N'
-	func set_N(value: int) -> void:
-		N = value
-
-	# Getter para 'M'
-	func get_M() -> int:
-		return M
-
-	# Setter para 'M'
-	func set_M(value: int) -> void:
-		M = value
-
-	# Getter para 'matriz'
-	func get_matriz() -> Array:
-		return matriz
-
-	# Setter para 'matriz'
-	func set_matriz(value: Array) -> void:
-		matriz = value
-
-class Entorno:
-	var mapa : Mapa
-	var posAgente : Array
-	var posObjetivo : Array
-	var recorrido : Array
-
-	func _init(mapa, posAgente, posObjetivo, recorrido):
-		self.mapa = mapa
-		self.posAgente = posAgente
-		self.posObjetivo = posObjetivo
-		self.recorrido = recorrido
-	
-	# Getter para 'mapa'
-	func get_mapa() -> Mapa:
-		return mapa
-
-	# Setter para 'mapa'
-	func set_mapa(value: Mapa) -> void:
-		mapa = value
-
-	# Getter para 'posAgente'
-	func get_pos_agente() -> Array:
-		return posAgente
-
-	# Setter para 'posAgente'
-	func set_pos_agente(value: Array) -> void:
-		posAgente = value
-
-	# Getter para 'posObjetivo'
-	func get_pos_objetivo() -> Array:
-		return posObjetivo
-
-	# Setter para 'posObjetivo'
-	func set_pos_objetivo(value: Array) -> void:
-		posObjetivo = value
-
-	# Getter para 'recorrido'
-	func get_recorrido() -> Array:
-		return recorrido
-
-	# Setter para 'recorrido'
-	func set_recorrido(value: Array) -> void:
-		recorrido = value
+@onready var gif := $Ole
 
 @onready var tileMap = $Mapa
 @onready var agente := $Agente
 
+
 var tile_size : float
+var terminado : bool = false
+
 
 func _ready():
 	Signals.connect("file_read",Callable(self, "_actualizar"),CONNECT_DEFERRED)
 	Signals.connect("mapa_read",Callable(self, "_mapa_paint"),CONNECT_DEFERRED)
 	Signals.connect("entorno_updated",Callable(self, "_update"),CONNECT_DEFERRED)
+	Signals.connect("finished",Callable(self, "_finished"),CONNECT_DEFERRED)
 	agente.play()
 
 func _proccess(delta):
@@ -141,10 +52,12 @@ func _actualizar() -> void:
 			var mapa = save_mapa(mapa_data)
 			var entorno = save_entorno(data,mapa)
 			pintar_entorno(entorno)
+			is_finished(entorno)
 		else:
 			print("Error al parsear el JSON")
 	else:
 		print("No se pudo abrir el archivo JSON")
+	
 
 func save_mapa(data) -> Mapa:
 	var mapa = Mapa.new(data["ruta"], data["N"], data["M"], data["matriz"])
@@ -202,9 +115,11 @@ func pintar_entorno(entorno:Entorno)->void:
 				4:
 					tileMap.set_cell(1,Vector2i(x,y),5,Vector2i(0,0),0)
 				5:
-					tileMap.set_cell(1,Vector2i(x,y),6,Vector2i(0,0),0)
-	
-	Signals.emit_signal("entorno_updated")
+					tileMap.set_cell(1,Vector2i(x,y),6,Vector2i(0,0),0)	
+	if not terminado:
+		Signals.emit_signal("entorno_updated")
+	elif terminado:
+		Signals.emit_signal("finished")
 
 func pintar_mapa(mapa : Mapa) -> void:
 	tileMap.set_scale(Vector2(float(45)/mapa.get_N(),float(45)/mapa.get_N()))
@@ -220,3 +135,15 @@ func pintar_mapa(mapa : Mapa) -> void:
 
 func _update() -> void:
 	Signals.emit_signal("file_updated")
+	
+func is_finished(entorno : Entorno) -> void:
+	if entorno.get_pos_agente() == entorno.get_pos_objetivo():
+		terminado = true
+		
+func _finished() -> void:
+	$"../Music".stop()
+	gif.show()
+	gif.play("default")
+	$"../Yay".play()
+	$Quit.show()
+	

@@ -7,6 +7,7 @@ package p2;
 public interface AgenteInterface {
     public void iniciarComportamiento();
     public Entorno getEntorno();
+    public void setEntorno(Entorno entorno);
     public void moverAgente();
     public String Energia();
 }

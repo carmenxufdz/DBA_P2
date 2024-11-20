@@ -5,8 +5,7 @@
 package p2;
 
 import com.google.gson.Gson;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class Serializador {
     
@@ -22,7 +21,25 @@ public class Serializador {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error al escribir el archivo JSON.");
-        }    
+
+        } 
+  
+    }
+    
+    public static Entorno deserializarEntorno(String rutaArchivo) {
+        Gson gson = new Gson();
+        Entorno entorno = null;
+
+        // Leer el archivo JSON
+        try (FileReader reader = new FileReader(rutaArchivo)) {
+            entorno = gson.fromJson(reader, Entorno.class);  // Convertir JSON a objeto
+            System.out.println("Archivo JSON deserializado con éxito desde: " + rutaArchivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al leer el archivo JSON.");
+        }
+
+        return entorno;
     }
 }
 
