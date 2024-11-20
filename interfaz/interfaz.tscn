@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=24 format=3 uid="uid://cuqknnptx21d5"]
+=======
+[gd_scene load_steps=34 format=3 uid="uid://cuqknnptx21d5"]
+>>>>>>> Stashed changes
 
 [ext_resource type="Script" path="res://interfaz.gd" id="1_m35fa"]
 [ext_resource type="Texture2D" uid="uid://bo77cc1mo17hf" path="res://assets/power.png" id="2_u3dmv"]
@@ -14,6 +18,17 @@
 [ext_resource type="Texture2D" uid="uid://dcvm4nv0lepan" path="res://assets/seta.png" id="9_edmot"]
 [ext_resource type="PackedScene" uid="uid://c2t4jii1jh12c" path="res://meta.tscn" id="10_ehkqh"]
 [ext_resource type="Texture2D" uid="uid://cbypxt78hmmou" path="res://assets/tileMeta.png" id="10_ibqmx"]
+[ext_resource type="Texture2D" uid="uid://bkydayet8ve2h" path="res://congratulation/1.png" id="12_mc2cs"]
+[ext_resource type="Texture2D" uid="uid://dlqtqrxiwuue8" path="res://congratulation/2.png" id="13_4qf8k"]
+[ext_resource type="Texture2D" uid="uid://bpwit8nltdeuc" path="res://assets/export.png" id="13_ol3d2"]
+[ext_resource type="Texture2D" uid="uid://bg6sxpogwsxjm" path="res://congratulation/3.png" id="14_8ts3p"]
+[ext_resource type="Script" path="res://opciones.gd" id="14_ts46a"]
+[ext_resource type="Script" path="res://line_edit.gd" id="15_a7rgc"]
+[ext_resource type="Texture2D" uid="uid://btpqo8015at7h" path="res://congratulation/4.png" id="15_bnsxj"]
+[ext_resource type="Script" path="res://gif.gd" id="16_vyrmw"]
+[ext_resource type="Texture2D" uid="uid://cgfa3kbi1y8uo" path="res://assets/exitLeft.png" id="19_lwf85"]
+[ext_resource type="AudioStream" uid="uid://bg8w3svkhgt8" path="res://sound/funny-bgm-240795.mp3" id="21_5ydyv"]
+[ext_resource type="AudioStream" uid="uid://c22y6fjo4xqnn" path="res://sound/yay-made-with-Voicemod.mp3" id="22_qyt5s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cejbh"]
 resource_name = "suelo0"
@@ -65,11 +80,35 @@ sources/5 = SubResource("TileSetAtlasSource_htmpm")
 sources/6 = SubResource("TileSetAtlasSource_5dl0u")
 sources/7 = SubResource("TileSetAtlasSource_mm1qe")
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_n0t03"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_mc2cs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_4qf8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_8ts3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_bnsxj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Interfaz" type="Node"]
 script = ExtResource("1_m35fa")
 
 [node name="vista" type="Node2D" parent="."]
+<<<<<<< Updated upstream
 visible = false
+=======
+position = Vector2(0, -1)
+>>>>>>> Stashed changes
 script = ExtResource("5_7cpr1")
 
 [node name="Mapa" type="TileMap" parent="vista"]
@@ -93,29 +132,60 @@ offset_right = 156.0
 offset_bottom = 23.0
 text = "Energia consumida: "
 
+[node name="Ole" type="AnimatedSprite2D" parent="vista"]
+visible = false
+position = Vector2(479.06, 381.75)
+scale = Vector2(1.72667, 1.72667)
+sprite_frames = SubResource("SpriteFrames_n0t03")
+script = ExtResource("16_vyrmw")
+
+[node name="Quit" type="MenuButton" parent="vista"]
+visible = false
+offset_left = 642.0
+offset_top = 607.0
+offset_right = 737.0
+offset_bottom = 665.0
+text = "EXIT"
+icon = ExtResource("19_lwf85")
+
 [node name="Menu" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< Updated upstream
 offset_left = 387.0
 offset_right = -370.0
 offset_bottom = 3.0
+=======
+offset_top = -1.5
+offset_bottom = 1.5
+>>>>>>> Stashed changes
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Iniciar" type="MenuButton" parent="Menu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -58.0
-offset_right = 121.0
-grow_vertical = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -60.0
+offset_right = 71.5
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Iniciar" type="MenuButton" parent="Menu/VBoxContainer"]
+layout_mode = 2
 text = "INICIAR"
 icon = ExtResource("2_u3dmv")
 
+<<<<<<< Updated upstream
 [node name="ElegirMapa" type="MenuButton" parent="Menu"]
 layout_mode = 1
 offset_right = 166.0
@@ -137,3 +207,125 @@ file_mode = 0
 [connection signal="pressed" from="Menu/Iniciar" to="." method="_on_iniciar_pressed"]
 [connection signal="pressed" from="Menu/ElegirMapa" to="." method="_on_elegir_mapa_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+=======
+[node name="Options" type="MenuButton" parent="Menu/VBoxContainer"]
+layout_mode = 2
+text = "OPCIONES"
+icon = ExtResource("13_ol3d2")
+
+[node name="Quit" type="MenuButton" parent="Menu/VBoxContainer"]
+layout_mode = 2
+text = "EXIT"
+icon = ExtResource("19_lwf85")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="opciones" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_ts46a")
+
+[node name="Mapa" type="TileMap" parent="opciones"]
+tile_set = SubResource("TileSet_te8oy")
+format = 2
+layer_0/name = "suelo"
+layer_1/name = "recorrido"
+layer_2/name = "meta"
+
+[node name="Agente" parent="opciones" instance=ExtResource("7_6xt07")]
+visible = false
+position = Vector2(258, 110)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="opciones"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -378.0
+offset_top = -74.0
+offset_right = -67.0
+offset_bottom = 74.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="fila_agente" type="LineEdit" parent="opciones/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "FILA_AGENTE"
+max_length = 10
+script = ExtResource("15_a7rgc")
+
+[node name="columna_agente" type="LineEdit" parent="opciones/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "COLUMNA_AGENTE"
+script = ExtResource("15_a7rgc")
+
+[node name="fila_meta" type="LineEdit" parent="opciones/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "FILA_META"
+script = ExtResource("15_a7rgc")
+
+[node name="columna_meta" type="LineEdit" parent="opciones/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "COLUMNA_META"
+script = ExtResource("15_a7rgc")
+
+[node name="mapaLabel" type="Label" parent="opciones/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="opciones"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -342.0
+offset_top = 86.0
+offset_right = -118.0
+offset_bottom = 117.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="mapa_button" type="Button" parent="opciones/HBoxContainer"]
+layout_mode = 2
+text = "MAPA"
+
+[node name="actualizar" type="Button" parent="opciones/HBoxContainer"]
+layout_mode = 2
+text = "ACTUALIZAR
+"
+
+[node name="atras" type="Button" parent="opciones/HBoxContainer"]
+layout_mode = 2
+text = "ATRAS"
+
+[node name="FileDialog" type="FileDialog" parent="opciones"]
+title = "Open a File"
+position = Vector2i(100, 125)
+size = Vector2i(500, 500)
+ok_button_text = "Open"
+file_mode = 0
+root_subfolder = "res://mapas"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_5ydyv")
+
+[node name="Yay" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_qyt5s")
+
+[connection signal="pressed" from="vista/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Iniciar" to="." method="_on_iniciar_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="opciones/HBoxContainer/mapa_button" to="opciones" method="_on_mapa_button_pressed"]
+[connection signal="pressed" from="opciones/HBoxContainer/actualizar" to="opciones" method="_on_actualizar_pressed"]
+[connection signal="pressed" from="opciones/HBoxContainer/atras" to="opciones" method="_on_atras_pressed"]
+[connection signal="file_selected" from="opciones/FileDialog" to="opciones" method="_on_file_dialog_file_selected"]
+>>>>>>> Stashed changes

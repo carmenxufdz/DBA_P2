@@ -1,5 +1,6 @@
 extends Node
 
+<<<<<<< Updated upstream
 class Mapa:
 	var ruta: String
 	var N : int
@@ -105,18 +106,31 @@ class Entorno:
 	func set_recorrido(value: Array) -> void:
 		recorrido = value
 
+=======
+@onready var gif := $Ole
+>>>>>>> Stashed changes
 @onready var tileMap = $Mapa
 @onready var agente := $Agente
 @onready var meta := $Meta
 
+<<<<<<< Updated upstream
 var tile_size = 16*4.5
+=======
+var tile_size : float
+var terminado : bool = false
+>>>>>>> Stashed changes
 
 func _ready():
 	Signals.connect("file_read",Callable(self, "_actualizar"),CONNECT_DEFERRED)
 	Signals.connect("mapa_read",Callable(self, "_mapa_paint"),CONNECT_DEFERRED)
 	Signals.connect("entorno_updated",Callable(self, "_update"),CONNECT_DEFERRED)
+	Signals.connect("finished",Callable(self, "_finished"),CONNECT_DEFERRED)
 	agente.play()
+<<<<<<< Updated upstream
 	meta.play()
+=======
+	
+>>>>>>> Stashed changes
 
 func _proccess(delta):
 	if finished():
@@ -154,10 +168,12 @@ func _actualizar() -> void:
 			var mapa = save_mapa(mapa_data)
 			var entorno = save_entorno(data,mapa)
 			pintar_entorno(entorno)
+			is_finished(entorno)
 		else:
 			print("Error al parsear el JSON")
 	else:
 		print("No se pudo abrir el archivo JSON")
+	
 
 func save_mapa(data) -> Mapa:
 	var mapa = Mapa.new(data["ruta"], data["N"], data["M"], data["matriz"])
@@ -219,9 +235,11 @@ func pintar_entorno(entorno:Entorno)->void:
 				4:
 					tileMap.set_cell(1,Vector2i(x,y),5,Vector2i(0,0),0)
 				5:
-					tileMap.set_cell(1,Vector2i(x,y),6,Vector2i(0,0),0)
-	
-	Signals.emit_signal("entorno_updated")
+					tileMap.set_cell(1,Vector2i(x,y),6,Vector2i(0,0),0)	
+	if not terminado:
+		Signals.emit_signal("entorno_updated")
+	elif terminado:
+		Signals.emit_signal("finished")
 
 func pintar_mapa(mapa : Mapa) -> void:
 	for y in range(mapa.get_N()):
@@ -234,6 +252,21 @@ func pintar_mapa(mapa : Mapa) -> void:
 
 func _update() -> void:
 	Signals.emit_signal("file_updated")
+<<<<<<< Updated upstream
 
 func finished() -> bool:
 	return agente.position == meta.position
+=======
+	
+func is_finished(entorno : Entorno) -> void:
+	if entorno.get_pos_agente() == entorno.get_pos_objetivo():
+		terminado = true
+		
+func _finished() -> void:
+	$"../Music".stop()
+	gif.show()
+	gif.play("default")
+	$"../Yay".play()
+	$Quit.show()
+	
+>>>>>>> Stashed changes
